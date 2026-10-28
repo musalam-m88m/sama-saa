@@ -1,0 +1,137 @@
+/* سما صاع — وضعين يبدّل بينهم زر ☾/☀ في القائمة (theme.js)
+   داكن = sky: سماوي غامق
+   فاتح = sand: أبيض مع سماوي غامق
+   «ليل» البنفسجي (بدون data-skin) باقي كاحتياط قبل ما يشتغل theme.js.
+   يتحمّل بعد theme.css من theme.js. */
+
+html:not([data-skin]) { --k1: #9257ff; --k2: #6227d6; --k3: #c03ce0; --kink: #fff; }
+
+:root[data-skin="sand"]:not([data-x]), :root[data-skin="sand"][data-theme]:not([data-x]) {
+  --bg: #f6fafd; --card: #fff; --g0: #f2f8fc; --g1: #e0f2fe; --g6: #0284c7; --line: #dbe6ee;
+  --ink: #0b2233; --ink2: #44596b; --ink3: #74889a; --gtext: #0b2a43; --link: #0369a1;
+  --pri: #0284c7; --pri-ink: #fff; --track: #e4eef5; --mute1: #eef4f8; --mute2: #566676;
+  --ok: #157347; --ok1: #e6f4ec; --red: #c8102e; --red1: #fdecee; --amb: #9a5b00; --amb1: #fff4e0; --amb2: #6b4300; --blu: #1d5fa8; --blu1: #e8f0fb; --olv: #4d6b12; --olv1: #eef3e2;
+  --side-bg: #0b2a40; --side-ink: #cfe3f0; --side-sub: #86a6bc; --side-hover: rgba(255,255,255,.06); --side-on: rgba(14,165,233,.22);
+  --c-col: #0284c7; --c-due: #cfdde8; --c-net: #0b2a43; --c-mnt: #e0832f; --a1: #bae6fd; --a2: #38bdf8; --a3: #0284c7; --a4: #075985; --gridc: #e6eef4;
+  --sh: 0 1px 2px rgba(11,42,67,.05), 0 8px 24px -12px rgba(11,42,67,.12); --sh-hi: 0 18px 40px -16px rgba(3,105,161,.25);
+  --k1: #0284c7; --k2: #075985; --k3: #0ea5e9; --kink: #fff;
+  color-scheme: light;
+}
+:root[data-skin="sky"]:not([data-x]), :root[data-skin="sky"][data-theme]:not([data-x]) {
+  --bg: #07141f; --card: #0d1f2e; --g0: #102637; --g1: #12324a; --g6: #38bdf8; --line: #1b3347;
+  --ink: #e6f1f8; --ink2: #a9c3d4; --ink3: #7c97aa; --gtext: #e6f1f8; --link: #7dd3fc;
+  --pri: #0ea5e9; --pri-ink: #04121c; --track: #16303f; --mute1: #11293a; --mute2: #a9c3d4;
+  --side-bg: #040d15; --side-ink: #b9d3e3; --side-sub: #6f8ea3; --side-hover: rgba(56,189,248,.08); --side-on: rgba(14,165,233,.2);
+  --c-col: #38bdf8; --c-due: #26445a; --c-net: #bae6fd; --c-mnt: #f5b041; --a1: #0c4a6e; --a2: #0369a1; --a3: #0ea5e9; --a4: #bae6fd; --gridc: #142d3e;
+  --sh-hi: 0 20px 40px -18px rgba(14,165,233,.4);
+  --k1: #38bdf8; --k2: #0369a1; --k3: #7dd3fc; --kink: #04121c;
+  color-scheme: dark;
+}
+
+/* لوحة الأداء كانت مثبّتة على البنفسجي — تتبع التصميم المختار */
+:root[data-skin="sand"]:not([data-x]) main:has(> section.kpis) {
+  --bg: #f6fafd; --card: #fff; --g0: #f2f8fc; --line: #dbe6ee; --ink: #0b2233; --ink2: #44596b; --ink3: #74889a; --gtext: #0b2a43;
+  --pri: #0284c7; --g6: #0284c7; --track: #e4eef5; --gridc: #e6eef4; --c-col: #0284c7; --c-due: #cfdde8; --c-net: #0b2a43; --c-mnt: #e0832f;
+  --red: #c8102e; --ok: #157347; --amb: #9a5b00; --link: #0369a1;
+  background: transparent; color: var(--ink); color-scheme: light;
+}
+:root[data-skin="sky"]:not([data-x]) main:has(> section.kpis) {
+  --bg: #07141f; --card: #0d1f2e; --g0: #102637; --line: #1b3347; --ink: #e6f1f8; --ink2: #a9c3d4; --ink3: #7c97aa; --gtext: #e6f1f8;
+  --pri: #0ea5e9; --g6: #38bdf8; --track: #16303f; --gridc: #142d3e; --c-col: #38bdf8; --c-due: #26445a; --c-net: #bae6fd; --c-mnt: #f5b041; --link: #7dd3fc;
+  background: transparent;
+}
+:root[data-skin="sand"]:not([data-x]) body, :root[data-skin="sand"]:not([data-x]) body:has(main > section.kpis) { background: #f6fafd; }
+:root[data-skin="sky"]:not([data-x]) body, :root[data-skin="sky"]:not([data-x]) body:has(main > section.kpis) { background: radial-gradient(1000px 500px at 90% -10%, rgba(14,165,233,.16), transparent 60%) fixed, #07141f; }
+
+/* الألوان اللي كانت ثابتة على البنفسجي صارت تتبع --k1/--k2/--k3 */
+:root[data-skin]:not([data-x]) .hero, :root[data-skin]:not([data-x]) main:has(> section.kpis) .hero { background: linear-gradient(135deg, var(--k1), var(--k2)); }
+:root[data-skin]:not([data-x]) .hero .hv, :root[data-skin]:not([data-x]) .hero .k, :root[data-skin]:not([data-x]) .hero span, :root[data-skin]:not([data-x]) .hero small, :root[data-skin]:not([data-x]) .hero .muted,
+:root[data-skin]:not([data-x]) main:has(> section.kpis) .hero .hv, :root[data-skin]:not([data-x]) main:has(> section.kpis) .hero .k, :root[data-skin]:not([data-x]) main:has(> section.kpis) .hero span, :root[data-skin]:not([data-x]) main:has(> section.kpis) .hero small, :root[data-skin]:not([data-x]) main:has(> section.kpis) .hero .muted { color: var(--kink); }
+:root[data-skin]:not([data-x]) .tile::before, :root[data-skin]:not([data-x]) main:has(> section.kpis) .tile::before,
+:root[data-skin]:not([data-x]) .meter i, :root[data-skin]:not([data-x]) .bar i, :root[data-skin]:not([data-x]) main:has(> section.kpis) .meter i { background: linear-gradient(90deg, var(--k1), var(--k3)); }
+:root[data-skin]:not([data-x]) .tile.ok::before, :root[data-skin]:not([data-x]) main:has(> section.kpis) .tile.ok::before { background: var(--ok); }
+:root[data-skin]:not([data-x]) .tile.red::before, :root[data-skin]:not([data-x]) main:has(> section.kpis) .tile.red::before { background: var(--red); }
+:root[data-skin]:not([data-x]) .tile.amb::before, :root[data-skin]:not([data-x]) main:has(> section.kpis) .tile.amb::before { background: var(--amb); }
+:root[data-skin]:not([data-x]) .btn.pri { background: linear-gradient(180deg, var(--k3), var(--k1) 50%, var(--k2)); border-color: var(--k2); color: var(--kink); text-shadow: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 color-mix(in srgb, var(--k2) 70%, #000), 0 8px 20px -10px var(--k1); }
+:root[data-skin]:not([data-x]) .btn.pri:hover { background: linear-gradient(180deg, var(--k3), var(--k1) 40%, var(--k2)); border-color: var(--k2); }
+:root[data-skin]:not([data-x]) .chip.on, :root[data-skin]:not([data-x]) main:has(> section.kpis) .chip.on { background: var(--k1); border-color: var(--k1); color: var(--kink); box-shadow: 0 6px 16px -8px var(--k1); }
+:root[data-skin]:not([data-x]) .nav a.on { box-shadow: inset -3px 0 0 var(--k1); }
+@media (max-width: 1023px) { :root[data-skin]:not([data-x]) .nav a.on { box-shadow: inset 0 -2px 0 var(--k1); } }
+:root[data-skin]:not([data-x]) .unit-card:hover, :root[data-skin]:not([data-x]) .prop-link:hover { border-color: var(--k1); }
+:root[data-skin]:not([data-x]) .search input:focus, :root[data-skin]:not([data-x]) .f input:focus, :root[data-skin]:not([data-x]) .f select:focus, :root[data-skin]:not([data-x]) .f textarea:focus { border-color: var(--k1); box-shadow: 0 0 0 4px color-mix(in srgb, var(--k1) 25%, transparent); }
+:root[data-skin]:not([data-x]) .toast { background: var(--card); color: var(--ink); border-color: var(--k1); }
+:root[data-skin]:not([data-x]) .login { background: linear-gradient(90deg, var(--k1), var(--k3)) top / 100% 4px no-repeat, var(--card); }
+
+/* الفاتح (اسمه الداخلي sand): أبيض مع سماوي غامق، والأزرار الثانوية بيضاء بارزة */
+:root[data-skin="sand"]:not([data-x]) .btn:not(.pri):not(.solid):not(.ghost), :root[data-skin="sand"]:not([data-x]) main:has(> section.kpis) .btn:not(.pri) { background: linear-gradient(180deg, #fff, #eef4f8); color: var(--ink); border-color: #d3dfe8; box-shadow: inset 0 1px 0 #fff, 0 1px 0 rgba(0,0,0,.06), 0 2px 4px -1px rgba(16,42,67,.18); }
+:root[data-skin="sand"]:not([data-x]) .search input, :root[data-skin="sand"]:not([data-x]) .f input, :root[data-skin="sand"]:not([data-x]) .f select, :root[data-skin="sand"]:not([data-x]) .f textarea, :root[data-skin="sand"]:not([data-x]) main:has(> section.kpis) .f select { background: #fff; color: var(--ink); }
+:root[data-skin="sand"]:not([data-x]) .chip, :root[data-skin="sand"]:not([data-x]) main:has(> section.kpis) .chip { background: #fff; color: var(--ink2); }
+:root[data-skin="sand"]:not([data-x]) .weakbar { background: #fff4e0; color: #6b4300; }
+:root[data-skin="sand"]:not([data-x]) .weakbar.soft { background: #e0f2fe; color: #0b2a43; }
+:root[data-skin="sand"]:not([data-x]) .ov { background: rgba(8,18,28,.45); }
+:root[data-skin="sand"]:not([data-x]) .login-wrap { background: radial-gradient(900px 500px at 50% -10%, #e0f2fe, #f6fafd 65%) !important; }
+
+/* الداكن (اسمه الداخلي sky): سماوي غامق */
+:root[data-skin="sky"]:not([data-x]) .btn:not(.pri):not(.solid):not(.ghost), :root[data-skin="sky"]:not([data-x]) main:has(> section.kpis) .btn:not(.pri) { background: linear-gradient(180deg, #14324a, #0e2536); color: #e6f1f8; border-color: #224661; box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 2px 0 #030b12; }
+:root[data-skin="sky"]:not([data-x]) .search input, :root[data-skin="sky"]:not([data-x]) .f input, :root[data-skin="sky"]:not([data-x]) .f select, :root[data-skin="sky"]:not([data-x]) .f textarea { background: #081826; }
+:root[data-skin="sky"]:not([data-x]) .weakbar { background: #0f2a3d; color: #bae6fd; }
+:root[data-skin="sky"]:not([data-x]) .login-wrap { background: radial-gradient(900px 500px at 50% -10%, rgba(14,165,233,.35), #07141f 65%) !important; }
+
+/* زر داكن / فاتح */
+.nav .sx-mode { display: inline-flex; align-items: center; gap: 6px; margin: 4px 12px 0; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: var(--side-sub); font-size: 13px; cursor: pointer; width: auto; }
+.nav .sx-mode i { font-style: normal; font-size: 15px; line-height: 1; display: inline-block; transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.nav .sx-mode:hover { border-color: var(--k1, #9b6bff); }
+.nav .sx-mode:hover i { transform: rotate(-20deg) scale(1.15); }
+html.sx-swap .nav .sx-mode i { animation: sxSpin .45s cubic-bezier(.22,1,.36,1); }
+@keyframes sxSpin { from { transform: rotate(-180deg) scale(.4); opacity: 0; } }
+html.sx-swap body, html.sx-swap .top, html.sx-swap main, html.sx-swap .card, html.sx-swap .tile { transition: background-color .35s, color .35s, border-color .35s; }
+@media (min-width: 1024px) { .nav .sx-mode { order: 98; align-self: flex-start; } }
+@media (max-width: 1023px) { .nav .sx-mode { flex: 0 0 auto; } .nav .sx-mode span { display: none; } }
+@media (prefers-reduced-motion: reduce) { .nav .sx-mode i { transition: none; animation: none !important; } }
+
+/* ======================================================================
+   رسوم بيانية بستايل «Data Signal» (التدرج والنقاط من theme.js)
+   ====================================================================== */
+main .plot .grp .mark { transition: filter .2s, opacity .2s; }
+main .plot .grp .mark.sx-v { transform-box: fill-box; transform-origin: 50% 100%; animation: sxBarUp .9s cubic-bezier(.22,1,.36,1) both; }
+main .plot .grp .mark.sx-h { transform-box: fill-box; transform-origin: 0 50%; animation: sxBarRight .9s cubic-bezier(.22,1,.36,1) both; }
+main .plot .grp:nth-of-type(2) .mark { animation-delay: .04s; } main .plot .grp:nth-of-type(3) .mark { animation-delay: .08s; }
+main .plot .grp:nth-of-type(4) .mark { animation-delay: .12s; } main .plot .grp:nth-of-type(5) .mark { animation-delay: .16s; }
+main .plot .grp:nth-of-type(6) .mark { animation-delay: .2s; } main .plot .grp:nth-of-type(7) .mark { animation-delay: .24s; }
+main .plot .grp:nth-of-type(8) .mark { animation-delay: .28s; } main .plot .grp:nth-of-type(n+9) .mark { animation-delay: .32s; }
+@keyframes sxBarUp { from { transform: scaleY(0); } }
+@keyframes sxBarRight { from { transform: scaleX(0); } }
+main .plot svg:hover .grp .mark { opacity: .45; }
+main .plot svg .grp:hover .mark, main .plot svg .grp:focus .mark { opacity: 1; filter: var(--sx-glow) brightness(1.25); }
+main .plot .grid { stroke-dasharray: 2 4; }
+
+/* ======================================================================
+   أزرار متحركة: لمعة تمر عليها عند التمرير، وتموّج عند الضغط
+   ====================================================================== */
+.btn, .chip { position: relative; overflow: hidden; isolation: isolate; }
+.btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.28) 50%, transparent 70%); transform: translateX(120%); transition: transform .6s cubic-bezier(.22,1,.36,1); pointer-events: none; z-index: -1; }
+.btn:hover::after { transform: translateX(-120%); }
+.btn.ghost::after { display: none; }
+.sx-ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: .25; transform: scale(0); animation: sxRipple .6s ease-out forwards; pointer-events: none; }
+@keyframes sxRipple { to { transform: scale(1); opacity: 0; } }
+.btn.pri { animation: sxGlow 3.2s ease-in-out infinite; }
+@keyframes sxGlow { 50% { box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 0 rgba(0,0,0,.35), 0 0 22px -2px var(--k1, #7b39fc); } }
+
+@media (prefers-reduced-motion: reduce) {
+  main .plot .grp .mark, .btn.pri { animation: none !important; }
+  .btn::after { display: none; }
+}
+
+/* تركيز واضح للكيبورد في كل التصاميم */
+.sx-skin button:focus-visible, .btn:focus-visible, .chip:focus-visible, .nav a:focus-visible, .nav button:focus-visible { outline: 3px solid var(--k1, #9b6bff); outline-offset: 2px; }
+
+/* شارة الإصدار */
+.v2 { display: inline-block; font-size: .62em; font-weight: 700; padding: 1px 7px; border-radius: 99px; vertical-align: middle; color: var(--kink, #fff); background: linear-gradient(135deg, var(--k1, #9257ff), var(--k3, #c03ce0)); direction: ltr; }
+
+/* الشعار يتبع زر داكن/فاتح بدل إعداد الجهاز (الطباعة تبقى بالنسخة الفاتحة) */
+@media screen {
+  :root[data-skin="sand"] .lg-l { display: inline !important; }
+  :root[data-skin="sand"] .lg-d { display: none !important; }
+  :root[data-skin="sky"] .lg-l { display: none !important; }
+  :root[data-skin="sky"] .lg-d { display: inline !important; }
+}

@@ -1,0 +1,40 @@
+/* سما صاع — لوحة متابعة الصيانة (#/maintenance) */
+.mb-tools { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.mb-tools .mb-q { flex: 1 1 260px; }
+.mb-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.mb-col { background: color-mix(in srgb, var(--card) 70%, transparent); border: 1px solid var(--line); border-radius: 18px; padding: 12px; min-height: 220px; transition: border-color .2s, background .2s, box-shadow .2s; }
+.mb-col header { display: flex; align-items: center; gap: 8px; padding: 2px 4px 12px; border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.mb-col header b { font-size: 16px; }
+.mb-col header .mb-cost { margin-inline-start: auto; }
+.mb-col.mb-new header { box-shadow: inset 0 -2px 0 var(--blu); }
+.mb-col.mb-progress header { box-shadow: inset 0 -2px 0 var(--amb); }
+.mb-col.mb-done header { box-shadow: inset 0 -2px 0 var(--ok); }
+.mb-col.over { border-color: var(--k1, #9b6bff); background: color-mix(in srgb, var(--k1, #9b6bff) 10%, var(--card)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--k1, #9b6bff) 25%, transparent); }
+.mb-list { display: flex; flex-direction: column; gap: 10px; }
+.mb-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; box-shadow: var(--sh); border-inline-start: 4px solid var(--line); transition: transform .2s, box-shadow .2s, opacity .2s; animation: mbIn .3s cubic-bezier(.22,1,.36,1) both; }
+.mb-card[draggable] { cursor: grab; }
+.mb-card:hover { transform: translateY(-2px); box-shadow: var(--sh-hi); }
+.mb-card.drag { opacity: .45; cursor: grabbing; }
+.mb-card.pri-urgent { border-inline-start-color: var(--red); }
+.mb-card.pri-low { border-inline-start-color: var(--ink3); }
+.mb-card.pri-normal { border-inline-start-color: var(--k1, #9b6bff); }
+.mb-top { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.mb-top b { font-size: 15px; }
+.mb-pri-urgent { background: var(--red1); color: var(--red); }
+.mb-pri-low { background: var(--mute1); color: var(--mute2); }
+.mb-where { display: block; font-size: 13.5px; margin-top: 4px; }
+.mb-desc { font-size: 13.5px; color: var(--ink2); margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.mb-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--ink3); margin-top: 8px; }
+.mb-late { color: var(--red); font-weight: 600; }
+.mb-acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+@keyframes mbIn { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 900px) { .mb-board { grid-template-columns: 1fr; } .mb-col { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .mb-card { animation: none; transition: none; } }
+
+/* ملفات المستأجرين */
+.tn-card { display: block; color: var(--ink); }
+.tn-card:hover { border-color: var(--k1, #9b6bff); transform: translateY(-2px); box-shadow: var(--sh-hi); }
+.tn-top { display: flex; align-items: center; gap: 12px; }
+.tn-top .badge { margin-inline-start: auto; }
+.tn-av { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 18px; color: var(--kink, #fff); background: linear-gradient(135deg, var(--k1, #9257ff), var(--k3, #c03ce0)); }
+.tn-av.lg { width: 60px; height: 60px; flex-basis: 60px; font-size: 26px; }

@@ -1,0 +1,134 @@
+/* سما صاع v3 — أشكال الأزرار المختارة من uiverse (2026-10-28)
+   ١) زر بإطار (Send Message): إطار خارجي فاتح وحبة داخلية — لكل الأزرار العادية
+   ٢) زر أيقونة مربع بحد رفيع — زر إغلاق النوافذ
+   ٣) أزرار دائرية بيضاء عايمة بظل — فوق/بحث تحت الشاشة
+   ٤) سهم داخل دائرة بخط — زر الرجوع فوق الصفحات
+   يتحمّل بعد v3.css ويغلبه. */
+
+html[data-skin]:not([data-x]) {
+  --bz-frame-1: #f2f2f2; --bz-frame-2: #d6d6d6; --bz-ring: #a9a9a9;
+  --bz-in-1: #e4e4e4; --bz-in-2: #f7f7f7; --bz-ink: #111;
+  --bz-shadow: 0 8px 16px -6px rgba(0,0,0,.28), 0 2px 3px rgba(0,0,0,.12);
+  --fab-bg: #fff; --fab-ink: #111; --fab-sh: 0 8px 18px -4px rgba(0,0,0,.28);
+}
+html[data-skin="sky"]:not([data-x]) {
+  --bz-frame-1: #2a3f52; --bz-frame-2: #15232f; --bz-ring: rgba(255,255,255,.14);
+  --bz-in-1: #1b2d3c; --bz-in-2: #24394b; --bz-ink: #e6f1f8;
+  --bz-shadow: 0 10px 20px -8px rgba(0,0,0,.7), 0 2px 3px rgba(0,0,0,.4);
+  --fab-bg: #e6f1f8; --fab-ink: #07141f; --fab-sh: 0 10px 22px -6px rgba(0,0,0,.75);
+}
+
+/* ---------- ١) الزر بإطار ---------- */
+html[data-skin]:not([data-x]) .btn:not(.ghost) {
+  border: 4px solid transparent !important;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, var(--bz-in-1), var(--bz-in-2)) padding-box,
+    linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+  color: var(--bz-ink) !important;
+  box-shadow: 0 0 0 1px var(--bz-ring), var(--bz-shadow) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45) !important;
+  min-height: 46px; padding: 0 16px;
+}
+html[data-skin="sky"]:not([data-x]) .btn:not(.ghost) { text-shadow: 0 1px 0 rgba(0,0,0,.4) !important; }
+html[data-skin]:not([data-x]) .btn:not(.ghost):not(:disabled):hover {
+  transform: translateY(-1px);
+  background:
+    linear-gradient(180deg, var(--bz-in-2), var(--bz-in-2)) padding-box,
+    linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+  box-shadow: 0 0 0 1px var(--bz-ring), 0 12px 22px -8px rgba(0,0,0,.32), 0 2px 3px rgba(0,0,0,.12) !important;
+}
+html[data-skin]:not([data-x]) .btn:not(.ghost):not(:disabled):active {
+  transform: translateY(1px) scale(.98);
+  background:
+    linear-gradient(0deg, var(--bz-in-1), var(--bz-in-2)) padding-box,
+    linear-gradient(180deg, var(--bz-frame-2), var(--bz-frame-1)) border-box !important;
+  box-shadow: 0 0 0 1px var(--bz-ring), 0 2px 4px -2px rgba(0,0,0,.3) !important;
+}
+html[data-skin]:not([data-x]) .btn:not(.ghost):focus-visible { box-shadow: 0 0 0 1px var(--bz-ring), var(--v3-ring) !important; }
+html[data-skin]:not([data-x]) .btn.sm:not(.ghost) { min-height: 38px; padding: 0 11px; border-width: 3px !important; border-radius: 11px; }
+
+/* الرئيسي: نفس الإطار، والحبة الداخلية بلون البراند */
+html[data-skin]:not([data-x]) .btn.pri {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--k1) 82%, #000), color-mix(in srgb, var(--k1) 92%, #fff)) padding-box,
+    linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+  color: #fff !important; text-shadow: 0 1px 0 rgba(0,0,0,.25) !important;
+}
+html[data-skin]:not([data-x]) .btn.pri:not(:disabled):hover {
+  background:
+    linear-gradient(180deg, var(--k1), color-mix(in srgb, var(--k1) 80%, #fff)) padding-box,
+    linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+}
+/* الخطر: الحبة حمرا فاتحة والنص أحمر */
+html[data-skin]:not([data-x]) .btn.dan:not(.solid) {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--red) 12%, var(--bz-in-1)), color-mix(in srgb, var(--red) 6%, var(--bz-in-2))) padding-box,
+    linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+  color: var(--red) !important; text-shadow: none !important;
+}
+html[data-skin]:not([data-x]) .btn.dan.solid {
+  background: linear-gradient(180deg, #a80d27, #d8213f) padding-box, linear-gradient(180deg, var(--bz-frame-1), var(--bz-frame-2)) border-box !important;
+  color: #fff !important; text-shadow: 0 1px 0 rgba(0,0,0,.25) !important;
+}
+/* أيقونة داخل الزر */
+html[data-skin]:not([data-x]) .btn .v3bi { width: 18px; height: 18px; flex: 0 0 18px; transition: transform .3s var(--v3-spring); }
+html[data-skin]:not([data-x]) .btn.sm .v3bi { width: 16px; height: 16px; flex-basis: 16px; }
+html[data-skin]:not([data-x]) .btn:not(:disabled):hover .v3bi { transform: translateX(-2px) rotate(-8deg); }
+/* اللمعة القديمة ما تناسب الإطار */
+html[data-skin]:not([data-x]) .btn:not([aria-busy="true"])::after { display: none !important; }
+html[data-skin]:not([data-x]) .btn[aria-busy="true"]::after { border-color: currentColor; border-inline-end-color: transparent; }
+html[data-skin]:not([data-x]) .btn[aria-busy="true"] { color: transparent !important; text-shadow: none !important; }
+html[data-skin]:not([data-x]) .btn[aria-busy="true"]::after { border-color: var(--bz-ink); border-inline-end-color: transparent; }
+html[data-skin]:not([data-x]) .btn.pri[aria-busy="true"]::after { border-color: #fff; border-inline-end-color: transparent; }
+
+/* ---------- ٢) زر أيقونة مربع (إغلاق النافذة) ---------- */
+html[data-skin]:not([data-x]) .mdl .mh .x {
+  width: 40px; height: 40px; display: grid; place-items: center; padding: 0;
+  border-radius: 9px; border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+  background: transparent; color: var(--ink); font-size: 0; cursor: pointer;
+  transition: background-color .18s, transform .18s var(--v3-ease), border-color .18s;
+}
+html[data-skin]:not([data-x]) .mdl .mh .x::before {
+  content: ""; width: 20px; height: 20px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html[data-skin]:not([data-x]) .mdl .mh .x:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); border-color: var(--ink); }
+html[data-skin]:not([data-x]) .mdl .mh .x:active { transform: scale(.92); }
+html[data-skin]:not([data-x]) .mdl .mh .x:focus-visible { outline: none; box-shadow: var(--v3-ring); }
+
+/* ---------- ٣) أزرار دائرية عايمة ---------- */
+.v3-fabs { position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); left: 22px; z-index: 40; display: flex; gap: 14px; }
+.v3-fab {
+  width: 50px; height: 50px; border-radius: 50%; border: 0; display: grid; place-items: center; cursor: pointer;
+  background: var(--fab-bg); color: var(--fab-ink); box-shadow: var(--fab-sh);
+  transition: transform .25s var(--v3-spring), box-shadow .25s, opacity .25s, visibility .25s;
+}
+.v3-fab svg { width: 22px; height: 22px; }
+.v3-fab:hover { transform: translateY(-3px); box-shadow: 0 14px 26px -6px rgba(0,0,0,.32); }
+.v3-fab:active { transform: scale(.92); }
+.v3-fab:focus-visible { outline: none; box-shadow: var(--fab-sh), var(--v3-ring); }
+.v3-fab[hidden] { display: grid !important; opacity: 0; visibility: hidden; transform: translateY(10px) scale(.8); pointer-events: none; }
+body:has(.login-wrap) .v3-fabs, body:has(.ov) .v3-fabs { display: none; }
+/* بالإنجليزي القائمة على اليسار، فالأزرار تروح يمين عشان ما تغطيها */
+html.sx-en .v3-fabs { left: auto; right: 22px; }
+@media (max-width: 640px) { html.sx-en .v3-fabs { left: auto; right: 14px; } }
+@media (max-width: 640px) { .v3-fabs { left: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); gap: 10px; } .v3-fab { width: 46px; height: 46px; } }
+@media print { .v3-fabs, .v3-back { display: none !important; } }
+
+/* ---------- ٤) زر الرجوع: سهم داخل دائرة ---------- */
+.v3-back {
+  width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; border: 0; background: transparent; color: var(--ink);
+  display: grid; place-items: center; cursor: pointer; padding: 0; transition: transform .25s var(--v3-spring), color .2s;
+}
+.v3-back svg { width: 34px; height: 34px; }
+.v3-back:hover { transform: translateX(3px); color: var(--k1); }
+.v3-back:active { transform: scale(.9); }
+.v3-back:focus-visible { outline: none; box-shadow: var(--v3-ring); }
+html:not(.sx-en) .v3-back svg { transform: scaleX(-1); } /* بالعربي السهم يأشر يمين (رجوع) */
+.head:has(> .v3-back) { align-items: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin]:not([data-x]) .btn .v3bi, .v3-fab, .v3-back { transition: none !important; }
+}

@@ -1,0 +1,173 @@
+/* سما صاع v3 — طبقة التصميم الأخيرة (تتحمّل بعد buttons.css من theme.js)
+   الهدف: ترتيب أهدأ، أزرار بنظام واحد واضح، حركة ناعمة بدون إزعاج.
+   كل شي هنا تحت html[data-skin] عشان يغلب الطبقات اللي قبله. */
+
+html[data-skin]:not([data-x]) {
+  --v3-r-sm: 10px; --v3-r: 14px; --v3-r-lg: 20px;
+  --v3-ease: cubic-bezier(.22, 1, .36, 1);
+  --v3-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --v3-ring: 0 0 0 3px color-mix(in srgb, var(--k1) 35%, transparent);
+  --v3-surface-2: color-mix(in srgb, var(--card) 92%, var(--k1) 8%);
+}
+
+/* ---------- وضوح النص (فحص التباين 2026-10-28) ---------- */
+/* الفاتح: الرمادي الخفيف كان 3.7:1 على الأبيض — صار فوق 4.5:1 */
+:root[data-skin="sand"]:not([data-x]):not([data-v3]), :root[data-skin="sand"]:not([data-x]):not([data-v3]) main:has(> section.kpis) { --ink3: #5b6e80; }
+:root[data-skin="sand"]:not([data-x]):not([data-v3]) .chip.on, :root[data-skin="sand"]:not([data-x]):not([data-v3]) main:has(> section.kpis) .chip.on { background: #0369a1; border-color: #0369a1; color: #fff; }
+/* عدّاد التنبيهات: أبيض على أحمر فاتح كان 2.7:1 */
+html[data-skin]:not([data-x]) .nav .count { background: #c8102e !important; color: #fff !important; }
+
+/* ---------- خطوط وأرقام ---------- */
+html[data-skin]:not([data-x]) body { letter-spacing: 0; -webkit-font-smoothing: antialiased; }
+html[data-skin]:not([data-x]) .num, html[data-skin]:not([data-x]) .tile .v, html[data-skin]:not([data-x]) table.t td { font-variant-numeric: tabular-nums; }
+html[data-skin]:not([data-x]) h1 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.25; letter-spacing: 0; }
+html[data-skin]:not([data-x]) h2 { font-size: 18px; line-height: 1.35; }
+html[data-skin]:not([data-x]) .head { gap: 16px; padding-bottom: 18px; margin-bottom: 22px; }
+html[data-skin]:not([data-x]) .head .sub { margin-top: 4px; }
+
+/* ---------- القائمة الجانبية: أيقونات، مسافات، وعلامة الصفحة الحالية ---------- */
+html[data-skin]:not([data-x]) .nav a .v3i, html[data-skin]:not([data-x]) .nav button .v3i {
+  width: 18px; height: 18px; flex: 0 0 18px; opacity: .72; transition: opacity .2s, transform .3s var(--v3-spring);
+}
+html[data-skin]:not([data-x]) .nav a:hover .v3i, html[data-skin]:not([data-x]) .nav a.on .v3i { opacity: 1; }
+html[data-skin]:not([data-x]) .nav a:hover .v3i { transform: translateX(-2px); }
+@media (min-width: 1024px) {
+  html[data-skin]:not([data-x]) .nav { gap: 3px; }
+  html[data-skin]:not([data-x]) .nav a, html[data-skin]:not([data-x]) .nav button:not(.sx-mode):not(.sx-lang) {
+    position: relative; padding: 9px 12px; border-radius: 11px; font-size: 14.5px; font-weight: 500;
+  }
+  html[data-skin]:not([data-x]) .nav a.on { background: var(--side-on); box-shadow: none; font-weight: 600; }
+  html[data-skin]:not([data-x]) .nav a.on::before {
+    content: ""; position: absolute; inset-inline-start: -16px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0;
+    background: var(--k1); box-shadow: 0 0 12px var(--k1);
+  }
+  /* فاصل بين أقسام الشغل اليومي وأقسام الإدارة */
+  html[data-skin]:not([data-x]) .nav a[href="#/users"] { margin-top: 14px; }
+  html[data-skin]:not([data-x]) .nav a[href="#/users"]::after {
+    content: ""; position: absolute; top: -8px; inset-inline: 12px; height: 1px; background: rgba(255,255,255,.08);
+  }
+}
+@media (max-width: 1023px) {
+  html[data-skin]:not([data-x]) .nav a .v3i { width: 16px; height: 16px; flex-basis: 16px; }
+  html[data-skin]:not([data-x]) .nav a { display: inline-flex; align-items: center; gap: 6px; }
+}
+
+/* ---------- البطاقات ---------- */
+html[data-skin]:not([data-x]) .card { border-radius: var(--v3-r-lg); padding: 20px 22px; }
+html[data-skin]:not([data-x]) .tile { border-radius: var(--v3-r); }
+html[data-skin]:not([data-x]) .item { border-radius: var(--v3-r); padding: 14px 16px; }
+html[data-skin]:not([data-x]) .grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 16px; }
+
+/* بطاقة المالك: عنوان واضح، إجراءات مرتبة، وأرقام العقار في شبكة */
+html[data-skin]:not([data-x]) .owner-card { display: flex; flex-direction: column; gap: 4px; }
+html[data-skin]:not([data-x]) .owner-card h3 { font-size: 17px; flex-wrap: wrap; row-gap: 8px; }
+html[data-skin]:not([data-x]) .owner-card .meta { font-size: 13.5px; line-height: 1.7; margin: 4px 0 8px; text-wrap: pretty; }
+html[data-skin]:not([data-x]) .prop-link {
+  border-radius: var(--v3-r); padding: 12px 14px; background: var(--v3-surface-2);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+}
+html[data-skin]:not([data-x]) .prop-link .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 12px; font-size: 13.5px; }
+html[data-skin]:not([data-x]) .prop-link .row > * { min-width: 0; }
+
+/* ---------- الأزرار: نظام واحد ---------- */
+/* الأحجام: عادي 42، صغير 34. الأنواع: رئيسي (لون البراند)، ثانوي (سطح خفيف)، شفاف، خطر */
+html[data-skin]:not([data-x]) .btn {
+  --b-bg: color-mix(in srgb, var(--k1) 9%, var(--card));
+  --b-bd: color-mix(in srgb, var(--k1) 20%, var(--line));
+  --b-ink: var(--ink);
+  background: var(--b-bg) !important; color: var(--b-ink) !important; border: 1px solid var(--b-bd) !important;
+  border-radius: 12px; min-height: 42px; padding: 0 18px; gap: 8px; font-weight: 600; letter-spacing: 0;
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 1px 2px rgba(0,0,0,.12) !important;
+  text-shadow: none !important; filter: none; animation: none !important;
+  transition: background-color .18s, border-color .18s, color .18s, box-shadow .25s var(--v3-ease), transform .18s var(--v3-ease) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+html[data-skin]:not([data-x]) .btn:not(:disabled):hover {
+  --b-bg: color-mix(in srgb, var(--k1) 16%, var(--card));
+  --b-bd: color-mix(in srgb, var(--k1) 42%, var(--line));
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 6px 16px -8px color-mix(in srgb, var(--k1) 55%, transparent) !important;
+}
+html[data-skin]:not([data-x]) .btn:not(:disabled):active { transform: translateY(0) scale(.97); transition-duration: .06s !important; }
+html[data-skin]:not([data-x]) .btn:focus-visible { outline: none !important; box-shadow: var(--v3-ring) !important; }
+html[data-skin]:not([data-x]) .btn.sm { min-height: 34px; padding: 0 12px; font-size: 13.5px; border-radius: 10px; }
+
+html[data-skin]:not([data-x]) .btn.pri {
+  --b-bg: var(--k1); --b-bd: var(--k1); --b-ink: var(--kink);
+  box-shadow: 0 1px 0 rgba(255,255,255,.28) inset, 0 4px 14px -6px color-mix(in srgb, var(--k1) 80%, transparent) !important;
+}
+html[data-skin]:not([data-x]) .btn.pri:not(:disabled):hover {
+  --b-bg: color-mix(in srgb, var(--k1) 86%, #fff); --b-bd: color-mix(in srgb, var(--k1) 86%, #fff);
+  box-shadow: 0 1px 0 rgba(255,255,255,.32) inset, 0 10px 24px -8px color-mix(in srgb, var(--k1) 85%, transparent) !important;
+}
+html[data-skin]:not([data-x]) .btn.pri::before { display: none !important; }
+
+html[data-skin]:not([data-x]) .btn.ghost {
+  --b-bg: transparent; --b-bd: transparent; --b-ink: var(--link); box-shadow: none !important;
+}
+html[data-skin]:not([data-x]) .btn.ghost:not(:disabled):hover { --b-bg: color-mix(in srgb, var(--k1) 10%, transparent); --b-bd: transparent; box-shadow: none !important; }
+
+html[data-skin]:not([data-x]) .btn.dan { --b-bg: color-mix(in srgb, var(--red) 8%, var(--card)); --b-bd: color-mix(in srgb, var(--red) 30%, var(--line)); --b-ink: var(--red); }
+html[data-skin]:not([data-x]) .btn.dan:not(:disabled):hover { --b-bg: color-mix(in srgb, var(--red) 15%, var(--card)); --b-bd: color-mix(in srgb, var(--red) 55%, var(--line)); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--red) 60%, transparent) !important; }
+html[data-skin]:not([data-x]) .btn.dan.solid { --b-bg: var(--red); --b-bd: var(--red); --b-ink: #fff; }
+html[data-skin]:not([data-x]) .btn.wa { --b-bd: color-mix(in srgb, #25d366 45%, var(--line)); --b-ink: var(--ok); }
+
+html[data-skin]:not([data-x]) .btn:disabled { opacity: .5; transform: none; box-shadow: none !important; cursor: not-allowed; }
+/* زر قيد التنفيذ: v3.js يحط aria-busy لين يرجع الطلب */
+html[data-skin]:not([data-x]) .btn[aria-busy="true"] { pointer-events: none; color: transparent !important; position: relative; }
+html[data-skin]:not([data-x]) .btn[aria-busy="true"]::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--b-ink); border-inline-end-color: transparent; background: none !important;
+  transform: none; animation: v3spin .7s linear infinite; z-index: 1;
+}
+@keyframes v3spin { to { transform: rotate(360deg); } }
+
+/* اللمعة القديمة اللي تمر على الزر: أخف وأقصر */
+html[data-skin]:not([data-x]) .btn:not([aria-busy="true"])::after { background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.14) 50%, transparent 65%) !important; transition-duration: .7s !important; }
+
+/* مجموعة الإجراءات داخل البطاقة: نفس الارتفاع وفاصل ثابت */
+html[data-skin]:not([data-x]) .item .r1 .acts, html[data-skin]:not([data-x]) .head .acts, html[data-skin]:not([data-x]) .sec-h .acts { gap: 8px; align-items: center; }
+
+/* الشرائح (chips) */
+html[data-skin]:not([data-x]) .chip { min-height: 34px; padding: 0 14px; display: inline-flex; align-items: center; font-weight: 500; transition: background-color .18s, color .18s, border-color .18s, transform .18s var(--v3-ease); }
+html[data-skin]:not([data-x]) .chip:not(.on):hover { border-color: color-mix(in srgb, var(--k1) 45%, var(--line)); transform: translateY(-1px); }
+html[data-skin]:not([data-x]) .chip:active { transform: scale(.96); }
+
+/* ---------- الحقول ---------- */
+html[data-skin]:not([data-x]) .f input, html[data-skin]:not([data-x]) .f select, html[data-skin]:not([data-x]) .f textarea, html[data-skin]:not([data-x]) .search input { min-height: 44px; border-radius: 12px; transition: border-color .18s, box-shadow .2s var(--v3-ease); }
+html[data-skin]:not([data-x]) .f input:hover:not(:focus), html[data-skin]:not([data-x]) .f select:hover:not(:focus), html[data-skin]:not([data-x]) .search input:hover:not(:focus) { border-color: color-mix(in srgb, var(--k1) 30%, var(--line)); }
+
+/* ---------- الحركة: دخول الصفحة والبطاقات ---------- */
+html[data-skin]:not([data-x]) main > * { animation: v3in .45s var(--v3-ease) both; }
+html[data-skin]:not([data-x]) main > *:nth-child(2) { animation-delay: .05s; }
+html[data-skin]:not([data-x]) main > *:nth-child(3) { animation-delay: .1s; }
+html[data-skin]:not([data-x]) main > *:nth-child(n+4) { animation-delay: .14s; }
+@keyframes v3in { from { opacity: 0; transform: translateY(10px); filter: blur(2px); } }
+html[data-skin]:not([data-x]) .grid > * { animation: v3in .5s var(--v3-ease) both; }
+html[data-skin]:not([data-x]) .grid > *:nth-child(2) { animation-delay: .06s; }
+html[data-skin]:not([data-x]) .grid > *:nth-child(3) { animation-delay: .12s; }
+html[data-skin]:not([data-x]) .grid > *:nth-child(4) { animation-delay: .18s; }
+html[data-skin]:not([data-x]) .grid > *:nth-child(n+5) { animation-delay: .22s; }
+html[data-skin]:not([data-x]) .card:not(.hero):not(.sx-compare):hover { border-color: color-mix(in srgb, var(--k1) 30%, var(--line)); }
+
+/* النافذة المنبثقة تطلع بنابض خفيف */
+html[data-skin]:not([data-x]) .mdl { animation: v3pop .32s var(--v3-spring) both; }
+@keyframes v3pop { from { opacity: 0; transform: translateY(12px) scale(.97); } }
+
+/* التوست ينزلق من تحت */
+html[data-skin]:not([data-x]) .toast { border-radius: 14px; animation: v3toast .35s var(--v3-spring) both; }
+@keyframes v3toast { from { opacity: 0; transform: translateY(16px) scale(.96); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-skin]:not([data-x]) main > *, html[data-skin]:not([data-x]) .grid > *, html[data-skin]:not([data-x]) .mdl, html[data-skin]:not([data-x]) .toast { animation: none !important; }
+  html[data-skin]:not([data-x]) .btn, html[data-skin]:not([data-x]) .chip { transition: none !important; transform: none !important; }
+  html[data-skin]:not([data-x]) .btn[aria-busy="true"]::after { animation-duration: 2s; }
+}
+
+/* شعار السندات والكشوفات بطبقات (v3.js) — نفس طبقات شعار القائمة، فخط العلم الأبيض يبين على الأزرق */
+html:root img.rlogo.v3-old, html:root[data-skin] img.rlogo.v3-old.lg-l { display: none !important; }
+.v3-rlogo { position: relative; display: inline-block; height: 64px; aspect-ratio: 900 / 646; flex: 0 0 auto; }
+.v3-rlogo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* شارة الإصدار */
+html[data-skin]:not([data-x]) .v2 { letter-spacing: .02em; }

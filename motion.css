@@ -1,0 +1,295 @@
+/* سما صاع v2 — أزرار ورسوم مستوحاة من معاينات MotionSites العامة
+   (Liquid Glass CTA، Data Signal، Dashboard UI، Growth Analytics). بناء خاص، مو منسوخ من برومبتاتهم. */
+
+/* ---------- الأزرار ---------- */
+/* الثانوي: زجاج سائل — شفاف، ضبابي، ولمعة على الحافة العلوية */
+:root:not([data-x]) .btn:not(.pri):not(.solid):not(.ghost):not(.dan) {
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03)) padding-box, var(--card);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(10px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.25), 0 6px 18px -10px rgba(0,0,0,.7);
+  border-radius: 999px;
+}
+:root:not([data-x]) .btn:not(.pri):not(.solid):not(.ghost):not(.dan):hover { border-color: color-mix(in srgb, var(--k1, #9b6bff) 60%, transparent); }
+:root[data-skin="sand"]:not([data-x]) .btn:not(.pri):not(.solid):not(.ghost):not(.dan) {
+  background: linear-gradient(180deg, #fff, #eef4f8); border-color: #d3dfe8; backdrop-filter: none;
+  box-shadow: inset 0 1px 0 #fff, 0 1px 0 rgba(0,0,0,.05), 0 6px 14px -10px rgba(16,42,67,.35);
+}
+
+/* الرئيسي: كبسولة مع دائرة سهم في الطرف (مثل «Get Started ●» في Data Signal) */
+:root:not([data-x]) .btn.pri { border-radius: 999px; padding-inline-end: 6px; gap: 10px; }
+:root:not([data-x]) .btn.pri.sm { padding-inline-end: 4px; }
+:root:not([data-x]) .btn.pri::before {
+  content: "←"; order: 2; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); font-size: 14px; line-height: 1;
+  transition: transform .25s cubic-bezier(.22,1,.36,1), background .2s;
+}
+:root:not([data-x]) .btn.pri.sm::before { width: 22px; height: 22px; font-size: 12px; }
+:root:not([data-x]) .btn.pri:hover::before { transform: translateX(-3px); background: rgba(255,255,255,.32); }
+:root:not([data-x]) .login .btn.pri { justify-content: center; }
+
+/* حركة الأزرار: ترتفع مع الماوس، تنضغط مع الكبسة، والرئيسي يمر عليه لمعان ويتوهج. transform بس عشان تكون خفيفة على الجوال */
+:root .btn { transition: transform .18s cubic-bezier(.22,1,.36,1), border-color .18s, box-shadow .2s, background .2s; }
+:root .btn:not(:disabled):hover { transform: translateY(-2px); }
+:root .btn:not(:disabled):active { transform: translateY(0) scale(.96); transition-duration: .06s; }
+:root:not([data-x]) .btn.pri { position: relative; overflow: hidden; isolation: isolate; }
+:root:not([data-x]) .btn.pri:not(:disabled):hover { box-shadow: 0 8px 22px -8px var(--k1, #9b6bff); }
+:root:not([data-x]) .btn.pri::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+:root:not([data-x]) .btn.pri:not(:disabled):hover::after { transform: translateX(120%); transition: transform .65s ease-out; }
+@media (prefers-reduced-motion: reduce) { .btn, .btn::after { transition: none !important; } .btn:hover, .btn:active { transform: none !important; } }
+
+/* ظهور مع السكرول (theme.js يحط sx-rv على البطاقات اللي تحت الشاشة) */
+.sx-rv { opacity: 0; transform: translateY(24px); transition: opacity .5s ease-out, transform .6s cubic-bezier(.22,1,.36,1); }
+.sx-rv.sx-rv-in { opacity: 1; transform: none; }
+
+/* انتقال الصفحات: خط بنفسجي يمشي فوق لما تغيّر الصفحة (دخول الأجزاء وحدة ورا وحدة موجود من قبل) */
+.sx-route { position: fixed; inset-inline: 0; top: 0; height: 3px; z-index: 9999; pointer-events: none; transform-origin: right; transform: scaleX(0); opacity: 0;
+  background: linear-gradient(90deg, var(--k3, #c03ce0), var(--k1, #7b39fc)); box-shadow: 0 0 10px var(--k1, #7b39fc); }
+html.sx-en .sx-route { transform-origin: left; }
+.sx-route.go { animation: sxRoute .55s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes sxRoute { 0% { opacity: 1; transform: scaleX(0); } 70% { opacity: 1; transform: scaleX(1); } 100% { opacity: 0; transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .sx-route { display: none; } }
+
+/* خلفية الشبكة المتحركة ورا صفحة الدخول (theme.js onLogin) */
+#sx-vanta { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1s ease-out; }
+#sx-vanta.on { opacity: .9; }
+.login-wrap { position: relative; z-index: 1; }
+body:has(#sx-vanta.on) .login-wrap { background: radial-gradient(900px 500px at 50% -10%, color-mix(in srgb, var(--k1, #7b39fc) 28%, transparent), transparent 65%) !important; }
+
+/* الخطر: كبسولة كمان */
+:root:not([data-x]) .btn.dan { border-radius: 999px; }
+:root:not([data-x]) .chip { border-radius: 999px; }
+
+/* ---------- حلقات النسبة ---------- */
+.tile.sx-has-ring { padding-inline-end: 76px; min-height: 86px; }
+.sx-ring { position: absolute; inset-inline-end: 14px; top: 50%; width: 52px; height: 52px; transform: translateY(-50%) rotate(-90deg); }
+.sx-ring circle { fill: none; stroke-width: 6; }
+.sx-ring .trk { stroke: var(--track); }
+.sx-ring .val { stroke: var(--k1, #9b6bff); stroke-linecap: round; stroke-dasharray: var(--c); stroke-dashoffset: var(--o); animation: sxRing 1.2s cubic-bezier(.22,1,.36,1) both; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--k1, #9b6bff) 70%, transparent)); }
+@keyframes sxRing { from { stroke-dashoffset: var(--c); } }
+
+/* ---------- بطاقة المستحق مقابل المحصّل ---------- */
+.sx-compare { display: grid; grid-template-columns: 1fr minmax(180px, 280px); gap: 20px; align-items: end; margin: 0 0 14px; position: relative; overflow: hidden; isolation: isolate; min-height: 210px; }
+.sx-compare::before { content: ""; position: absolute; inset: -40%; z-index: -1; filter: blur(50px); opacity: .55;
+  background: radial-gradient(40% 50% at 20% 30%, var(--k3, #c03ce0), transparent 70%), radial-gradient(45% 55% at 80% 80%, var(--k1, #7b39fc), transparent 70%); }
+.sx-cmp-txt .k { color: var(--ink2); font-size: 14px; }
+.sx-cmp-pct { font-family: 'Reem Kufi', var(--font); font-size: 64px; line-height: 1.05; color: var(--gtext); margin: 6px 0; }
+.sx-cmp-pct .num { font-size: inherit; }
+.sx-cmp-bars { display: flex; gap: 16px; align-items: flex-end; height: 170px; }
+.sx-bar { flex: 1; height: var(--h); position: relative; border-radius: 10px 10px 4px 4px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 8px; font-size: 12px; transform-origin: bottom; animation: sxBarUp .9s cubic-bezier(.22,1,.36,1) both; }
+.sx-bar span { color: rgba(255,255,255,.85); } .sx-bar b { color: #fff; font-size: 13px; }
+.sx-bar.due { background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.12)); border: 1px solid rgba(255,255,255,.25); }
+.sx-bar.got { background: linear-gradient(180deg, var(--k3, #c03ce0), var(--k1, #7b39fc)); box-shadow: 0 10px 30px -8px var(--k1, #7b39fc); animation-delay: .15s; }
+:root[data-skin="sand"] .sx-bar.due { background: linear-gradient(180deg, #cfdde8, #e6eef4); border-color: #c4d4e0; }
+:root[data-skin="sand"] .sx-bar.due span, :root[data-skin="sand"] .sx-bar.due b { color: var(--ink); }
+@media (max-width: 640px) { .sx-compare { grid-template-columns: 1fr; } .sx-cmp-pct { font-size: 48px; } .sx-cmp-bars { height: 140px; } }
+
+@media (prefers-reduced-motion: reduce) { .sx-ring .val, .sx-bar { animation: none !important; } }
+
+/* ---------- زر اللغة + اتجاه English ---------- */
+.nav .sx-lang { display: inline-flex; align-items: center; gap: 4px; margin: 4px 12px 0; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: var(--side-sub); font-size: 13px; cursor: pointer; width: auto; }
+.nav .sx-lang b { color: #fff; }
+.nav .sx-lang:hover { border-color: var(--k1, #9b6bff); }
+@media (min-width: 1024px) { .nav .sx-lang { order: 97; align-self: flex-start; width: auto; } }
+html.sx-en #app, html.sx-en .ov { font-family: 'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+@media (min-width: 1024px) {
+  html.sx-en .top { right: auto; left: 0; border-left: 0; border-right: 1px solid var(--line); }
+  html.sx-en body:has(.top) main, html.sx-en body:has(.top) .weakbar { margin-right: 0; margin-left: var(--side-w); }
+  html.sx-en .nav a, html.sx-en .nav button { text-align: left; }
+}
+html.sx-en:not([data-x]) .nav a.on { box-shadow: inset 3px 0 0 var(--k1, #9b6bff); }
+html.sx-en:not([data-x]) .btn.pri::before { content: "→"; }
+html.sx-en:not([data-x]) .btn.pri:hover::before { transform: translateX(3px); }
+
+/* ---------- شعار سما صاع الأصلي بطبقات متحركة (theme.js LOGO، الصور في logo/) ---------- */
+@media screen {
+  html:root .login .logo img:not(.sx-logo img), html:root .brand img:not(.sx-logo img), html:root[data-skin] .login .logo img:not(.sx-logo img), html:root[data-skin] .brand img:not(.sx-logo img) { display: none !important; }
+}
+.sx-logo { position: relative; display: block; aspect-ratio: 900 / 646; overflow: hidden; }
+.sx-logo:not(.full) { aspect-ratio: 900 / 430; }
+.login .logo .sx-logo { width: min(300px, 86%); }
+.brand .sx-logo { height: 50px; width: auto; }
+@media (max-width: 1023px) { .brand .sx-logo { height: 40px; } }
+.sx-logo img { position: absolute; inset: 0 0 auto 0; width: 100% !important; max-width: none !important; height: auto !important; display: block !important; }
+/* النسخة الفاتحة على الخلفيات البيضاء، والغامقة على الغامقة. القائمة دايماً غامقة */
+.sx-logo .d { visibility: hidden; }
+/* صفحة الدخول: الشعار دايماً الأسود (مثل الفاتح). في الداكن ينحط على لوح أبيض عشان يبين.
+   القائمة الجانبية دايماً غامقة، فشعارها النسخة البيضاء. */
+.brand .sx-logo .l { visibility: hidden; }
+.brand .sx-logo .d { visibility: visible; }
+/* الداكن: بطاقة الدخول كلها أزرق #0C77AD (اختيار المالك) والشعار الأسود فوقها، والنصوص بيضاء */
+:root[data-skin="sky"] .login {
+  --card: #0c77ad; --ink: #fff; --ink2: #e0f2fe; --ink3: #bae6fd; --gtext: #fff; --line: rgba(255,255,255,.25); --link: #e0f2fe;
+  background: linear-gradient(90deg, var(--k1), var(--k3)) top / 100% 4px no-repeat, var(--card) !important; color: var(--ink);
+  border-color: rgba(255,255,255,.25); box-shadow: 0 30px 80px -20px rgba(0,0,0,.7);
+}
+/* الخانات بيضاء، فالكتابة لازم تكون غامقة (كانت بيضاء على أبيض وما تبين) */
+:root[data-skin="sky"]:not([data-x]) .login .f input, :root[data-skin="sky"]:not([data-x]) .login input { background: #fff; color: #0b2a43; -webkit-text-fill-color: #0b2a43; caret-color: #0b2a43; border-color: rgba(11,42,67,.2); }
+:root[data-skin="sky"]:not([data-x]) .login input::placeholder { color: #5b7186; -webkit-text-fill-color: #5b7186; }
+:root[data-skin="sky"]:not([data-x]) .login .btn:not(.pri) { background: rgba(11,42,67,.06); color: var(--ink); border-color: rgba(11,42,67,.16); }
+:root[data-skin="sky"] .login label, :root[data-skin="sky"] .login .logo b { color: var(--ink); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sx-l-mark { animation: sxLgUp .8s cubic-bezier(.22,1,.36,1) both; }
+  .sx-l-red { animation: sxLgWipe .7s .45s cubic-bezier(.65,0,.35,1) both, sxLgGlow 6s 2.5s ease-in-out infinite; }
+  .sx-l-green { animation: sxLgWipe .7s .6s cubic-bezier(.65,0,.35,1) both, sxLgGlow 6s 2.8s ease-in-out infinite; }
+  .sx-l-white { animation: sxLgWipe .7s .75s cubic-bezier(.65,0,.35,1) both; }
+  .sx-l-text { animation: sxLgText .6s .95s cubic-bezier(.22,1,.36,1) both; }
+}
+@keyframes sxLgUp { from { clip-path: inset(66% 0 0 0); transform: translateY(12%); opacity: 0; } }
+@keyframes sxLgWipe { from { clip-path: inset(66% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes sxLgText { from { opacity: 0; transform: translateY(6%); } }
+@keyframes sxLgGlow { 0%, 85%, 100% { filter: none; } 92% { filter: brightness(1.35) saturate(1.2); } }
+/* بعد ما يكتمل: لمعة ضوء تمشي على الشعار وترجع (مقصوصة على شكله بالـ mask)، والشعار يطفو بهدوء.
+   في صفحة الدخول بس — في القائمة يوقف بعد ما يرتسم عشان ما يشتت. */
+.login .sx-logo.full::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 45%, rgba(255,255,255,.7) 50%, transparent 55%) no-repeat;
+  background-size: 300% 100%; background-position: 85% 0;
+  -webkit-mask: url(logo/lg-mark-light.webp) top / 100% auto no-repeat, url(logo/lg-red.webp) top / 100% auto no-repeat, url(logo/lg-green.webp) top / 100% auto no-repeat, url(logo/lg-text-light.webp) top / 100% auto no-repeat;
+          mask: url(logo/lg-mark-light.webp) top / 100% auto no-repeat, url(logo/lg-red.webp) top / 100% auto no-repeat, url(logo/lg-green.webp) top / 100% auto no-repeat, url(logo/lg-text-light.webp) top / 100% auto no-repeat;
+}
+/* لون اللمعة في الداكن: ثلجي (انختار من تجربة ٦ ألوان) */
+:root[data-skin="sky"] .login .sx-logo.full::after { background-image: linear-gradient(105deg, transparent 44%, rgba(56,189,248,.45) 47%, rgba(224,242,254,.95) 50%, rgba(56,189,248,.45) 53%, transparent 56%); }
+@media (prefers-reduced-motion: no-preference) {
+  .login .sx-logo.full { animation: sxLgFloat 6s 1.8s ease-in-out infinite; }
+  .login .sx-logo.full::after { animation: sxLgShine 7s 1.6s cubic-bezier(.45,0,.55,1) infinite; }
+}
+@keyframes sxLgFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+/* يمشي يمين ← يسار، وقفة، ويرجع يسار ← يمين، وقفة */
+@keyframes sxLgShine {
+  0% { opacity: 1; background-position: 85% 0; }
+  35% { opacity: 1; background-position: 15% 0; }
+  50% { opacity: 1; background-position: 15% 0; }
+  85% { opacity: 1; background-position: 85% 0; }
+  100% { opacity: 1; background-position: 85% 0; }
+}
+@media print { .sx-logo { display: none !important; } }
+
+/* ---------- صفحة الدخول: اللغة + داكن/فاتح (theme.js addLoginBar) ---------- */
+.sx-loginbar { position: absolute; top: 16px; inset-inline-end: 16px; z-index: 2; display: flex; gap: 8px; align-items: center; }
+.sx-langseg { display: inline-flex; padding: 3px; border-radius: 12px; background: color-mix(in srgb, var(--card) 80%, transparent); border: 1px solid var(--line); backdrop-filter: blur(8px); }
+.sx-langseg button { border: 0; background: transparent; color: var(--ink2); font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 9px; cursor: pointer; transition: background .2s, color .2s; }
+.sx-langseg button.on { background: var(--k1); color: var(--kink); font-weight: 600; }
+.sx-langseg button:not(.on):hover { color: var(--ink); }
+.sx-loginbar .sx-mode { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 12px; font: inherit; font-size: 13px; cursor: pointer;
+  background: color-mix(in srgb, var(--card) 80%, transparent); border: 1px solid var(--line); color: var(--ink); backdrop-filter: blur(8px); }
+.sx-loginbar .sx-mode i { font-style: normal; font-size: 15px; line-height: 1; }
+.sx-loginbar .sx-mode:hover { border-color: var(--k1); }
+html.sx-swap .sx-loginbar .sx-mode i { animation: sxSpin .45s cubic-bezier(.22,1,.36,1); }
+.sx-langseg button:focus-visible, .sx-loginbar .sx-mode:focus-visible { outline: 3px solid var(--k1); outline-offset: 2px; }
+@media (max-width: 480px) { .sx-loginbar { top: 10px; inset-inline-end: 10px; } .sx-loginbar .sx-mode span { display: none; } }
+
+/* الشريط الأبيض في العلم: في صفحة الدخول ينرسم أبيض كامل (الشعار الأسود) ويتحرك مع الأحمر والأخضر */
+.login .sx-logo .sx-l-white { visibility: hidden; }
+.sx-l-white-full { visibility: visible; }
+@media (prefers-reduced-motion: no-preference) { .sx-l-white-full { animation: sxLgWipe .7s .75s cubic-bezier(.65,0,.35,1) both; } }
+/* زر «دخول»: إطار بس (نمط ٣ من تجربة الأزرار) — يتعبّى لما تمر عليه. بقية أزرار الموقع ما تتغير */
+html:root[data-skin]:not([data-x]) .login .btn.pri { background: transparent; border: 2px solid var(--k1); color: var(--k1); box-shadow: none; }
+html:root[data-skin]:not([data-x]) .login .btn.pri::after { display: none; }
+html:root[data-skin]:not([data-x]) .login .btn.pri:not(:disabled):hover { background: var(--k1); color: var(--kink); }
+html:root[data-skin="sky"]:not([data-x]) .login .btn.pri { border-color: #fff; color: #fff; }
+html:root[data-skin="sky"]:not([data-x]) .login .btn.pri:not(:disabled):hover { background: #fff; color: #0c77ad; }
+
+/* زر إظهار/إخفاء كلمة المرور: أيقونة عين بدل الكلمة (الكلمة باقية لقارئ الشاشة).
+   عين مفتوحة = اضغط عشان تظهر، عين عليها خط = اضغط عشان تخفي. */
+html:root .pw input { padding-left: 46px !important; }
+html:root .pw button { width: 34px; height: 34px; padding: 0 !important; font-size: 0 !important; display: grid; place-items: center; border-radius: 10px !important;
+  background: transparent !important; color: var(--k1) !important; border: 0 !important; box-shadow: none !important; transition: background .2s, transform .15s; }
+html:root .pw button::before { content: ""; width: 20px; height: 20px; background: currentColor;
+  -webkit-mask: var(--sx-eye) center / contain no-repeat; mask: var(--sx-eye) center / contain no-repeat; }
+html:root .pw { --sx-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E"); }
+html:root .pw:has(input[type="text"]) { --sx-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-2.4 3.3M6.6 6.6C3.6 8.5 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6'/%3E%3Cpath d='M9.9 9.9a3 3 0 0 0 4.2 4.2'/%3E%3Cpath d='M3 3l18 18'/%3E%3C/svg%3E"); }
+html:root .pw button:hover { background: color-mix(in srgb, var(--k1) 14%, transparent) !important; }
+html:root .pw button:active { transform: scale(.9); }
+html:root .pw button:focus-visible { outline: 3px solid var(--k1); outline-offset: 1px; }
+html.sx-en:root .pw input { padding-left: 12px !important; padding-right: 46px !important; }
+html.sx-en:root .pw button { left: auto; right: 6px; }
+html:root[data-skin="sky"] .login .pw button { color: #0c77ad !important; }
+
+/* ---------- صفحة العقار: زر بطاقات/العمارة + رسمة العمارة (towerView في index.html) ---------- */
+.uview { display: inline-flex; padding: 3px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); }
+.uview button { border: 0; background: transparent; color: var(--ink2); font: inherit; font-size: 13px; min-height: 36px; padding: 0 14px; border-radius: 9px; cursor: pointer; }
+.uview button.on { background: var(--k1); color: var(--kink); font-weight: 600; }
+.uview button:focus-visible { outline: 3px solid var(--k1); outline-offset: 2px; }
+.tower { --c-paid: #16a34a; --c-ok: #0284c7; --c-partial: #d97706; --c-late: #dc2626; --c-vacant: #64748b;
+  max-width: 760px; margin: 8px auto 0; display: flex; flex-direction: column; align-items: stretch; }
+.tw-roof { height: 26px; margin: 0 8%; background: var(--k1); clip-path: polygon(4% 100%, 50% 0, 96% 100%); opacity: .85; }
+.tw-name { text-align: center; font-weight: 700; padding: 8px; background: var(--card); border: 1px solid var(--line); border-bottom: 0; border-radius: 12px 12px 0 0; margin: 0 4%; }
+.tw-floor { display: flex; gap: 10px; align-items: stretch; padding: 10px 12px; margin: 0 4%; background: var(--card); border: 1px solid var(--line); border-top: 0; }
+.tw-fl { flex: 0 0 72px; display: grid; place-items: center; font-size: 12px; color: var(--ink2); border-inline-end: 1px dashed var(--line); padding-inline-end: 8px; }
+.tw-units { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 8px; }
+.tw-u { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 56px; border-radius: 10px; text-decoration: none; color: #fff;
+  background: var(--sc); box-shadow: inset 0 -3px 0 rgba(0,0,0,.2); transition: transform .15s; }
+.tw-u b { font-size: 16px; } .tw-u span { font-size: 11px; opacity: .92; }
+.tw-u:hover { transform: translateY(-2px); } .tw-u:focus-visible { outline: 3px solid var(--k1); outline-offset: 2px; }
+.s-paid { --sc: var(--c-paid); } .s-ok { --sc: var(--c-ok); } .s-partial { --sc: var(--c-partial); } .s-late { --sc: var(--c-late); } .s-vacant { --sc: var(--c-vacant); }
+.tw-base { height: 12px; background: var(--ink3); opacity: .5; border-radius: 0 0 6px 6px; }
+.tw-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; justify-content: center; margin-top: 14px; font-size: 13px; color: var(--ink2); }
+.tw-legend span { display: inline-flex; align-items: center; gap: 6px; } .tw-legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--sc); }
+@media (max-width: 640px) { .tw-floor, .tw-name { margin: 0; } .tw-roof { margin: 0 4%; } .tw-fl { flex-basis: 48px; } .tw-units { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); } }
+
+/* ---------- التقويم (viewCalendar) ---------- */
+.cal { --k-due: #0284c7; --k-late: #dc2626; --k-paid: #16a34a; --k-cheque: #d97706; --k-bounced: #b91c1c; --k-maint: #7c3aed; --k-contract: #db2777; }
+.cal-ev { --k-due: #0284c7; --k-late: #dc2626; --k-paid: #16a34a; --k-cheque: #d97706; --k-bounced: #b91c1c; --k-maint: #7c3aed; --k-contract: #db2777; }
+.k-due { --kc: var(--k-due); } .k-late { --kc: var(--k-late); } .k-paid { --kc: var(--k-paid); } .k-cheque { --kc: var(--k-cheque); } .k-bounced { --kc: var(--k-bounced); } .k-maint { --kc: var(--k-maint); } .k-contract { --kc: var(--k-contract); }
+.cal-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: 12px; color: var(--ink2); margin-bottom: 12px; }
+.cal-legend span { display: inline-flex; align-items: center; gap: 6px; } .cal-legend i, .cal-dots i, .cal-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--kc); display: inline-block; }
+.cal-g { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.cal-w { text-align: center; font-size: 12px; color: var(--ink2); padding: 4px 0; }
+.cal-c { position: relative; min-height: 78px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: inherit; padding: 6px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; cursor: pointer; text-align: start; }
+.cal-c.out { border: 0; cursor: default; }
+.cal-c.has { background: color-mix(in srgb, var(--k1) 7%, transparent); }
+.cal-c.today .cal-n { background: var(--k1); color: var(--kink); border-radius: 999px; padding: 0 7px; }
+.cal-c.sel { border-color: var(--k1); box-shadow: 0 0 0 2px var(--k1) inset; }
+.cal-c:focus-visible { outline: 3px solid var(--k1); outline-offset: 2px; }
+.cal-n { font-weight: 700; font-size: 14px; } .cal-dots { display: flex; flex-wrap: wrap; gap: 3px; }
+.cal-cnt { position: absolute; bottom: 6px; inset-inline-end: 8px; font-size: 11px; color: var(--ink2); }
+.cal-ev { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; text-decoration: none; color: inherit; border-inline-start: 4px solid var(--kc); }
+.cal-ev .cal-amt { margin-inline-start: auto; }
+@media (max-width: 640px) { .cal-g { gap: 3px; } .cal-c { min-height: 52px; padding: 4px; } .cal-cnt { display: none; } .cal-w { font-size: 10px; } }
+
+/* شعار القائمة الجانبية: العمارة سوداء والعلم بألوانه (طلب المالك) */
+.brand .sx-logo .l { visibility: visible; }
+.brand .sx-logo .sx-l-mark.d { visibility: hidden; }
+/* القائمة الجانبية بلون بطاقة الدخول #0C77AD (اختيار المالك)، فالشعار الأسود يبين بدون لوح */
+html:root[data-skin] .top { --side-bg: #0c77ad; --side-ink: #fff; --side-sub: #e0f2fe; --side-hover: rgba(255,255,255,.14); --side-on: rgba(11,42,67,.32); --side-on-ink: #fff; }
+html:root[data-skin] .top { border-color: rgba(255,255,255,.18); }
+html:root[data-skin] .nav #gsBtn { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.22); }
+
+/* شعار القائمة أكبر (طلب المالك) */
+html:root .brand .sx-logo { height: 84px; }
+@media (max-width: 1023px) { html:root .brand .sx-logo { height: 52px; } }
+
+/* القائمة الجانبية: الشعار والاسم في النص، والاسم أكبر (طلب المالك) */
+@media (min-width: 1024px) {
+  html:root .brand { align-items: center; text-align: center; gap: 10px; }
+  html:root .brand > span:not(.sx-logo) { font-size: 22px; line-height: 1.3; }
+  html:root .brand > span:not(.sx-logo) small { display: block; font-size: 15px; margin-top: 2px; }
+}
+
+/* شعار الكشوفات والإيصالات: نفس شعار القائمة — العمارة سوداء والعلم بألوانه، على لوح أبيض عشان يبين في الداكن */
+html:root .rlogo.lg-d, html:root[data-skin] .rlogo.lg-d { display: none !important; }
+html:root .rlogo.lg-l, html:root[data-skin] .rlogo.lg-l { display: inline-block !important; background: none; }
+/* رأس الكشوفات والإيصالات: أزرق #0C77AD ينزل بالتدريج لين لون الصفحة (طلب المالك). الطباعة تبقى بيضاء */
+@media screen {
+  html:root .report .rh, html:root .rh, html:root .vh { background: linear-gradient(180deg, #0c77ad 0%, #0c77ad 70%, color-mix(in srgb, #0c77ad 0%, var(--card, #0d1f2e)) 100%); border-radius: 14px 14px 0 0; padding: 18px 20px 16px; border-bottom-color: #0c77ad; }
+  html:root .rh h1, html:root .vh h1 { color: #fff; }
+  html:root .rh, html:root .vh { color: #e0f2fe; }
+  html:root .rh .muted, html:root .vh .muted, html:root .rh .small, html:root .vh .small { color: #e0f2fe !important; }
+  :root[data-skin="sand"] .rh, :root[data-skin="sand"] .vh { background: linear-gradient(180deg, #0c77ad 0%, #0c77ad 60%, #4f9fcc 100%); }
+  :root[data-skin="sand"] .rh h1, :root[data-skin="sand"] .vh h1 { color: #fff; }
+}
+
+/* القائمة الجانبية: نفس تدرج رأس الكشوفات — أزرق #0C77AD فوق ينزل بالتدريج.
+   الداكن يرجع للون القائمة الغامق، والفاتح ينزل لأزرق فاتح (طلب المالك) */
+html:root[data-skin] .top { background: linear-gradient(180deg, #0c77ad 0%, #0c77ad 22%, #040d15 78%) !important; }
+html:root[data-skin="sand"] .top { background: linear-gradient(180deg, #0c77ad 0%, #0c77ad 22%, #4f9fcc 100%) !important; }
+@media (max-width: 1023px) { html:root[data-skin] .top, html:root[data-skin="sand"] .top { background: #0c77ad !important; } }
+
+/* المستأجر: زر «English» القديم في القائمة ينشال — زر ع · EN تحت يكفي (طلب المالك) */
+html:root .nav .langbtn { display: none !important; }
