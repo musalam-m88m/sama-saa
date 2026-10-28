@@ -196,7 +196,7 @@
       <span class="lp-ic lp-ok">${svg('done')}</span>
       <h2>${CO.whatsapp ? 'تم تجهيز طلبك' : 'تم استلام طلبك (تجريبي)'}</h2>
       <p class="muted">${CO.whatsapp ? 'انفتح الواتساب برسالة جاهزة، اضغط إرسال فيه.' : 'رقم الواتساب ما انضاف للحين، هذا ملخّص طلبك:'}</p>
-      <pre class="wa-preview">${esc(msg)}</pre>
+      <pre class="wa-preview sx-no-tr">${esc(msg)}</pre>
       <button type="button" class="btn" data-a="home">الرجوع للصفحة الأولى</button>
     </section>`;
   }
@@ -235,10 +235,15 @@
     if (!String(v.name || '').trim()) return err('اكتب الاسم');
     if (mob.length < 9) return err('اكتب رقم جوال صحيح');
     const s = SERVICES.find(x => x.id === state.service);
-    const lines = [`طلب جديد من موقع ${CO.name}`, `الخدمة: ${s.title}${state.kind ? ' — ' + KIND[state.kind][0] : ''}`,
-      v.want && `تبي: ${v.want}`, `نوع العقار: ${v.type}`, `المنطقة: ${v.area}`, v.size && `المساحة: ${v.size} قدم²`,
-      v.budget && `الميزانية: ${v.budget} درهم`, v.price && `السعر المتوقع: ${v.price} درهم`, v.purpose && `الغرض: ${v.purpose}`,
-      `الاسم: ${String(v.name).trim()}`, `الجوال: ${mob}`, v.notes && `ملاحظات: ${String(v.notes).trim()}`].filter(Boolean);
+    // الملخّص (ورسالة الواتساب) بلغة الزائر: بالإنجليزي نترجم العناوين والخيارات، واللي كتبه هو يظل كما هو
+    const E = en() && window.saaI18n, L = (ar, enTxt) => E ? enTxt : ar, T = x => E ? saaI18n.text(x) : x;
+    const lines = [L(`طلب جديد من موقع ${CO.name}`, 'New request from the Sama Saa Real Estate website'),
+      `${L('الخدمة', 'Service')}: ${T(s.title)}${state.kind ? ' — ' + T(KIND[state.kind][0]) : ''}`,
+      v.want && `${L('تبي', 'Wants to')}: ${T(v.want)}`, `${L('نوع العقار', 'Property type')}: ${T(v.type)}`, `${L('المنطقة', 'Area')}: ${T(v.area)}`,
+      v.size && `${L('المساحة', 'Size')}: ${v.size} ${L('قدم²', 'sq ft')}`,
+      v.budget && `${L('الميزانية', 'Budget')}: ${v.budget} ${L('درهم', 'AED')}`, v.price && `${L('السعر المتوقع', 'Expected price')}: ${v.price} ${L('درهم', 'AED')}`,
+      v.purpose && `${L('الغرض', 'Purpose')}: ${T(v.purpose)}`,
+      `${L('الاسم', 'Name')}: ${String(v.name).trim()}`, `${L('الجوال', 'Mobile')}: ${mob}`, v.notes && `${L('ملاحظات', 'Notes')}: ${String(v.notes).trim()}`].filter(Boolean);
     const msg = lines.join('\n');
     if (CO.whatsapp) window.open(`https://wa.me/${CO.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
     state = { ...state, step: 'done', msg, values: v }; render();

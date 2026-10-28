@@ -204,6 +204,42 @@
     'المستحق': 'Due', 'المحصّل': 'Collected',
     // الصفحة الأولى (landing.js)
     'تخطّي': 'Skip', 'عقارك': 'Your property', 'أمانة…': 'is a trust…', 'ونحن': 'and we', 'أهلها': 'keep it',
+    'العربية': 'Arabic', 'داكن / فاتح': 'Dark / light', 'خدماتنا': 'Our services', 'رجوع': 'Back', 'مثال: 1,500,000': 'e.g. 1,500,000',
+    // نصوص النظام اللي طلعت بدون ترجمة في الفحص
+    'جارِ تجهيز سما صاع v3…': 'Preparing Sama Saa v3…', 'جارِ تجهيز سما صاع…': 'Preparing Sama Saa…', 'التبديل للعربي': 'Switch to Arabic',
+    'نهاية عقد': 'Contract end', 'الشهر اللي قبل': 'Previous month', 'الشهر الجاي': 'Next month', 'موعد': 'events',
+    'لا توجد عمليات مطابقة': 'No matching actions', 'ابحث باسم المستخدم أو الشقة أو العملية…': 'Search by username, unit or action…', 'ابحث باسم المستخدم أو الشقة أو العملية': 'Search by username, unit or action',
+    'ابحث باسم المستخدم أو الاسم أو المالك…': 'Search by username, name or owner…', 'كل سجلات المحاسب مقفلة': "All the accountant's records are locked",
+    'رجّعها': 'Move back', 'صلاحية المحاسب': 'Accountant permission', 'عقار لهذا المالك': 'Property for this owner', 'طريقة العرض': 'View mode',
+    'منتظمة': 'On track', 'مدفوعة': 'Paid', 'فاضية': 'Vacant', 'الأرضي': 'Ground floor', 'الطابق': 'Floor', 'الاستحقاق': 'Due',
+    'رقم التسجيل في نظام توثيق': 'Tawtheeq registration number', 'مستأجر سابق': 'Former tenant',
+    'لا توجد مصاريف خلال الفترة': 'No expenses in this period', 'لا توجد إيجارات محصّلة خلال الفترة': 'No rent collected in this period',
+    'سجّل الشيك المؤجل عند استلامه. يُحتسب دفعة فقط عند تحويل حالته إلى «تم الصرف».': 'Record the post-dated cheque when you receive it. It only counts as a payment once its status changes to "Cleared".',
+    'الملاك والعقارات والشقق والمستأجرين دفعة واحدة': 'Owners, properties, units and tenants in one go',
+    'نزّل النموذج واملأه (صف لكل شقة). الأعمدة المطلوبة: اسم المالك، اسم العقار، رقم الشقة. إذا كتبت اسم المستأجر فلازم بداية العقد والإيجار السنوي.': 'Download the template and fill it in (one row per unit). Required columns: owner name, property name, unit number. If you enter a tenant name, contract start and annual rent are required.',
+    'التواريخ بصيغة يوم/شهر/سنة (مثل 01/11/2026). عدد الدفعات: 1 أو 2 أو 3 أو 4 أو 6 أو 12 (الافتراضي 4).': 'Dates as day/month/year (e.g. 01/11/2026). Number of payments: 1, 2, 3, 4, 6 or 12 (default 4).',
+    'ارفع الملف (xlsx أو csv) وراجع المعاينة. الشقق الموجودة مسبقاً تُتخطى ولا تتغير.': 'Upload the file (xlsx or csv) and review the preview. Units that already exist are skipped and not changed.',
+    'تنزيل النموذج': 'Download template',
+    // البحث الشامل
+    'اسم مستأجر، جوال، رقم شيك، رقم سند، رقم توثيق، عقار…': 'Tenant name, mobile, cheque no., receipt no., Tawtheeq no., property…',
+    'اكتب حرفين على الأقل. يبحث في المستأجرين الحاليين والسابقين والشيكات وسندات القبض والملاك والعقارات.': 'Type at least 2 letters. Searches current and former tenants, cheques, receipts, owners and properties.',
+    // صفحات المالك
+    'كل أملاكك': 'All your properties', 'كل أملاكي': 'All my properties', 'صيانة منجزة': 'Maintenance completed', 'صافي دخلك شهرياً': 'Your net income per month',
+    'كل الطلبات من البلاغ لين الإقفال': 'Every request from report to closing', 'تقييم المستأجر': "Tenant's rating",
+    '🚫 تم الوصول لسقف الصيانة لهذه الشقة. إضافة صيانة جديدة مقفلة.': '🚫 This unit has reached its maintenance cap. Adding new maintenance is locked.',
+    '🚫 تم الوصول لسقف الصيانة لهذه الشقة. إضافة صيانة جديدة مقفلة (يمكن للمدير التجاوز عند الضرورة).': '🚫 This unit has reached its maintenance cap. Adding new maintenance is locked (a manager can override if needed).',
+    // بيانات العرض التجريبية
+    'فاتورة صيانة المكيف': 'A/C maintenance invoice', 'فاتورة': 'Invoice',
+    'غرفة وصالة': '1 bedroom + hall', 'غرفتان وصالة': '2 bedrooms + hall', 'ثلاث غرف وصالة': '3 bedrooms + hall',
+    'حوالة': 'Bank transfer', 'حوالة متأخرة': 'Late transfer', 'شيك الدفعة الثالثة': 'Third payment cheque', 'عقد إيجار': 'Lease contract', 'صورة الهوية': 'ID copy', 'إيصال سداد': 'Payment receipt', '🔒 الإنهاء بصلاحية المدير': '🔒 Ending needs a manager', 'الإنهاء بصلاحية المدير': 'Ending needs a manager',
+    'وثيقة تأمين المبنى': 'Building insurance policy', 'تأمين المبنى': 'Building insurance', 'إصلاح باب المطبخ': 'Kitchen door repair',
+    'تسريب ماء تحت مغسلة المطبخ': 'Water leak under the kitchen sink', 'تبديل مفتاح إنارة الصالة': 'Replace the hall light switch', 'تبديل باب غرفة النوم': 'Replace the bedroom door',
+    'تنظيف وتعبئة غاز المكيف': 'A/C cleaning and gas refill', 'إعادة دهان الشقة كاملة': 'Repaint the whole unit',
+    'يطلب تمديد العقد سنة إضافية': 'Wants to extend the contract another year', 'يفضّل التواصل مساءً': 'Prefers to be contacted in the evening',
+    'وعد بسداد المتأخر نهاية الشهر': 'Promised to pay the overdue amount at month end', 'تم تغيير أقفال الباب عند الاستلام': 'Door locks were changed at handover',
+    'راتب حارس البناية': 'Building guard salary', 'تنظيف الممرات والدرج': 'Corridor and stair cleaning', 'هيئة الكهرباء والمياه': 'Electricity & Water Authority',
+    'شركة الأمان للحراسة': 'Al Aman Security Co.', 'مؤسسة النظافة الذهبية': 'Golden Cleaning Est.', 'مؤسسة البرودة للتكييف': 'Al Buroda A/C Est.',
+    'فني السباكة': 'Plumber', 'شركة الألوان': 'Al Alwan Co.', 'منجرة الفجر': 'Al Fajr Carpentry',
     'سما صاع للعقارات': 'Sama Saa Real Estate', 'دخول النظام': 'Sign in to system', 'بوابة الملاك': 'Owners portal', 'الرجوع للنظام': 'Back to system', 'الصفحة الأولى': 'Home page',
     'شريككم في إدارة وتأجير وبيع وشراء وتقييم العقارات في دولة الإمارات': 'Your partner in managing, renting, selling, buying and valuing property in the UAE',
     'نهتم بعقاراتكم كأنها عقاراتنا: نتابع المستأجرين والتحصيل والصيانة، ونرسل للمالك كشفاً واضحاً كل شهر. ونساعدكم في البيع والشراء والتقييم بخبرة في سوق العين وأبوظبي.': 'We care for your properties as if they were our own: we follow up tenants, collections and maintenance, and send the owner a clear statement every month. We also help you sell, buy and value property with experience in the Al Ain and Abu Dhabi markets.',
@@ -273,6 +309,7 @@
     [/^عقار: /g, 'Property: '], [/^شقة — /g, 'Unit — '], [/^تعديل الحساب: /g, 'Edit account: '], [/^عقد إيجار شقة (\d+)$/g, 'Lease contract — unit $1'], [/^إيصال سداد /g, 'Payment receipt '],
     [/^(\d+) دفعات$/g, '$1 payments'], [/(^|[\s·—(])شقة (\d+)/g, '$1Unit $2'], [/^درهم · /g, 'AED · '], [/ درهم ما انحصّلت$/g, ' AED not collected yet'],
     [/(\d[\d.,]*) ألف درهم/g, '$1K AED'],
+    [/^تم تصدير (\d+) شقة$/g, 'Exported $1 units'], [/^صافي دخلك في (\d+)$/g, 'Your net income in $1'], [/^لا توجد نتائج لـ «(.+)»$/g, 'No results for "$1"'], [/^شيك لاستحقاق /g, 'Cheque for payment due '], [/^فتح (?=\S)/g, 'Open '],
   );
   const PH = {
     'ابحث بالاسم أو الجوال أو الهوية…': 'Search by name, mobile or ID…', 'ابحث باسم المالك أو اسم المستخدم…': 'Search owner or username…',
@@ -368,6 +405,7 @@
     } finally { flushing = false; }
   }
   // كل نص عربي باقي: من الذاكرة، أو المترجم، أو الاحتياط
+  const MISS = new Set();
   const anyAr = /[؀-ۿ][؀-ۿً-ٰٟ\s،؛]*[؀-ۿ]|[؀-ۿ]/g;
   function finish(s) {
     if (!/[؀-ۿ٠-٩]/.test(s)) return s;
@@ -377,6 +415,7 @@
       if (MT[k]) return seg.replace(k, MT[k]);
       if (D[k]) return seg.replace(k, D[k]);
       if (k.split(/\s+/).length >= 3 && 'Translator' in self) { mtQueue.add(k); }
+      MISS.add(k); // للفحص: نص ما له ترجمة في القاموس (saaI18n.misses())
       return seg.replace(k, wordFallback(k));
     });
   }
@@ -449,6 +488,7 @@
   if (lang === 'en') { document.documentElement.classList.add('sx-en'); initMT(); }
   window.saaI18n = {
     state: () => ({ mt: mtState, cached: Object.keys(MT).length, queued: mtQueue.size }),
+    misses: () => [...MISS],
     // ملف الـ PDF يترسم برا #app، فنترجمه هو بعد إذا اللغة إنجليزي
     isEn: () => lang === 'en',
     text: s => (lang === 'en' ? tr(s) : null) ?? s,
