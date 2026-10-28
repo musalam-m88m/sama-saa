@@ -150,6 +150,8 @@ html.lp-intro-on .lp > * { opacity: 0; transition: none; }
 .lp-intro-line span { display: inline-block; opacity: 0; transform: translateY(14px); filter: blur(6px);
   animation: lpWord .6s cubic-bezier(.22,1,.36,1) forwards; animation-delay: calc(.95s + var(--w) * .24s); }
 @keyframes lpWord { to { opacity: 1; transform: none; filter: none; } }
+/* نفس الجملة تحت الشعار في الصفحة الأولى، تبقى ظاهرة */
+.lp-heroline { margin: 4px 0 18px; font-size: clamp(24px, 4vw, 40px); }
 .lp-intro-skip { position: absolute; bottom: calc(26px + env(safe-area-inset-bottom, 0px)); inset-inline-end: 26px;
   background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; padding: 8px 20px; font: inherit; font-size: 15px; cursor: pointer; backdrop-filter: blur(6px); }
 .lp-intro-skip:hover { background: rgba(255,255,255,.26); }
