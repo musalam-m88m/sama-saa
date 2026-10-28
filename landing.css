@@ -158,24 +158,12 @@ html.lp-intro-on .lp > * { opacity: 0; transition: none; }
 .lp-intro-skip:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .lp-intro, .lp-intro-line span { transition: none; animation: none; opacity: 1; transform: none; filter: none; } }
 
-/* ---------- تجربة خلفيات الصفحة الأولى (lp-bg.js) ---------- */
+/* ---------- خلفية الصفحة الأولى: ضباب (lp-bg.js) ---------- */
 #lp-bg { position: fixed; inset: 0; z-index: 59; pointer-events: none; }
 html.lp-bg-on #sx-vanta { visibility: hidden; }
 /* فوق التأثير: أزرق خفيف من فوق عشان الشعار والكلام يبينون، والباقي شفاف */
 html.lp-bg-on body .lp { background: linear-gradient(180deg, rgba(12,119,173,.45) 0%, rgba(12,119,173,.15) 45%, rgba(7,20,31,0) 75%) !important; }
-.lp-bgpick { position: fixed; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); z-index: 75;
-  display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none;
-  background: rgba(7,20,31,.72); border: 1px solid rgba(255,255,255,.18); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 12px 30px -12px rgba(0,0,0,.6); }
-.lp-bgpick::-webkit-scrollbar { display: none; }
-.lp-bgpick b { color: #fff; font-size: 13px; padding: 0 8px; white-space: nowrap; }
-.lp-bgpick button { position: relative; flex: 0 0 auto; min-width: 36px; height: 36px; padding: 0 10px; border-radius: 999px; border: 0; cursor: pointer;
-  background: transparent; color: #e0f2fe; font: inherit; font-weight: 700; transition: background .18s, color .18s; }
-.lp-bgpick button span { display: none; }
-.lp-bgpick button[aria-pressed="true"] { background: #38bdf8; color: #04121c; }
-.lp-bgpick button[aria-pressed="true"] span { display: inline; margin-inline-start: 6px; font-weight: 600; }
-.lp-bgpick button:hover:not([aria-pressed="true"]) { background: rgba(255,255,255,.12); }
-.lp-bgpick button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-@media print { #lp-bg, .lp-bgpick { display: none !important; } }
+@media print { #lp-bg { display: none !important; } }
 
 @keyframes lpIn { from { opacity: 0; transform: translateY(12px); } }
 @media (max-width: 560px) {
