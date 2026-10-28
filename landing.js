@@ -54,7 +54,14 @@
     if (document.querySelector('link[href^="landing.css"]')) return;
     const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'landing.css'; document.head.appendChild(l);
   }
-  function close() { if (root) { root.remove(); root = null; document.documentElement.classList.remove('lp-open'); } }
+  function close() { if (root) { root.remove(); root = null; document.documentElement.classList.remove('lp-open'); if (window.lpBg) window.lpBg.hide(); } }
+  // تجربة خلفيات الصفحة الأولى (lp-bg.js)
+  function bg() {
+    if (window.lpBg) return window.lpBg.show();
+    const s = document.createElement('script'); s.src = 'lp-bg.js';
+    s.onload = () => { if (root && window.lpBg) window.lpBg.show(); };
+    document.head.appendChild(s);
+  }
   function sync() {
     // قبل الدخول: الصفحة الأولى هي البداية. بعد الدخول: تنفتح بس من رابط «الصفحة الأولى» (#/home)
     const show = (document.querySelector('.login-wrap') && !loggedIn() && atHome()) || (loggedIn() && atHomeExplicit() && document.querySelector('.top'));
@@ -92,6 +99,7 @@
     document.body.appendChild(root);
     document.documentElement.classList.add('lp-open');
     state = { step: 'home' }; render();
+    bg();
   }
 
   // جملة الترحيب تحت الشعار في الصفحة الأولى: تطلع كلمة كلمة كل مرة تنرسم الصفحة (أول دخول، أو رجوع من أي خانة)
