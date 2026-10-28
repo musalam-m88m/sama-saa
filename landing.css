@@ -12,13 +12,19 @@ html.lp-open body { overflow: hidden; }
 .lp-brand { display: flex; align-items: center; gap: 12px; }
 .lp-brand b { display: block; font-size: 18px; } .lp-brand small { color: var(--ink3); font-size: 12px; letter-spacing: .04em; }
 /* ---------- الشعار المتحرك (نفس شعار شاشة الدخول والقائمة، motion.css) ---------- */
-/* الفاتح: العمارة والاسم بالأسود. الداكن: بالأبيض مثل القائمة الجانبية. خط العلم الأبيض دايماً ظاهر */
-:root[data-skin="sky"] .lp .sx-logo .l { visibility: hidden; }
-:root[data-skin="sky"] .lp .sx-logo .d { visibility: visible; }
+/* الشعار دايماً بالأسود (مثل شاشة الدخول)، على لوح: أزرق #0C77AD في الداكن (نفس بطاقة الدخول) وأبيض في الفاتح */
+.lp .sx-logo .l { visibility: visible; }
+.lp .sx-logo .d { visibility: hidden; }
 .lp .sx-logo .sx-l-white-full { visibility: visible; }
-.lp-brand .sx-logo { height: 54px; width: auto; }
-.lp-herologo { display: flex; justify-content: center; margin-bottom: 10px; }
-.lp-herologo .sx-logo { width: min(340px, 72vw); }
+.lp-plate { display: inline-flex; align-items: center; justify-content: center; border-radius: 22px; background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 18px 40px -18px rgba(0,0,0,.45); }
+:root[data-skin="sky"] .lp-plate { background: #0c77ad; border-color: rgba(255,255,255,.25); box-shadow: 0 24px 60px -22px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.18); }
+/* الشريط العلوي: الشعار الكامل بالاسم، كبير وواضح في كل الصفحات */
+.lp-brand .lp-plate { padding: 8px 14px; border-radius: 16px; }
+.lp-brand .sx-logo { height: 96px; width: auto; }
+.lp-herologo { display: flex; justify-content: center; margin-bottom: 18px; }
+.lp-herologo .lp-plate { padding: 22px 34px; }
+.lp-herologo .sx-logo { width: min(420px, 74vw); }
 /* بعد ما يرتسم: يطفو بهدوء وتمشي عليه لمعة (نفس شاشة الدخول) */
 .lp .sx-logo.full::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
@@ -36,7 +42,8 @@ html.lp-open body { overflow: hidden; }
 /* ---------- خلفية الخيوط المتحركة (Vanta من theme.js) تبين من ورا الصفحات ---------- */
 body:has(#sx-vanta.on) .lp { background: radial-gradient(1000px 520px at 85% -10%, color-mix(in srgb, var(--k1) 22%, transparent), transparent 60%), transparent; }
 /* بطاقة الدخول اللي تحت الصفحة الأولى ما تبين من ورا الشفافية */
-html.lp-open .login-wrap > * { visibility: hidden !important; }
+/* كل اللي داخلها (مب بس الأبناء): خط العلم الأبيض في شعار الدخول عليه visibility:visible صريح فكان يطلع من تحت العنوان */
+html.lp-open .login-wrap * { visibility: hidden !important; }
 /* البطاقات زجاج خفيف عشان الخيوط تبين حواليها */
 body:has(#sx-vanta.on) .lp :is(.lp-card:not(.lp-main), .lp-form, .lp-done) { background: color-mix(in srgb, var(--card) 86%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .lp-tools { margin-inline-start: auto; display: flex; gap: 8px; align-items: center; }
@@ -113,7 +120,9 @@ html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
 @keyframes lpIn { from { opacity: 0; transform: translateY(12px); } }
 @media (max-width: 560px) {
   .lp-brand small { display: none; }
-  .lp-brand .sx-logo { height: 44px; }
+  .lp-brand .sx-logo { height: 58px; }
+  .lp-brand .lp-plate { padding: 6px 10px; }
+  .lp-herologo .lp-plate { padding: 16px 20px; }
   .lp-login { padding: 0 12px !important; }
   .lp-card { min-height: 0; padding-bottom: 46px; }
 }

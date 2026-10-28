@@ -104,7 +104,7 @@
 
   function header() {
     return `<header class="lp-top">
-      <div class="lp-brand">${LOGO(false)}<div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
+      <div class="lp-brand"><span class="lp-plate">${LOGO(true)}</span><div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
@@ -116,7 +116,7 @@
   function viewHome() {
     return `${header()}
     <section class="lp-hero">
-      <div class="lp-herologo">${LOGO(true)}</div>
+      <div class="lp-herologo"><span class="lp-plate">${LOGO(true)}</span></div>
       <h1>${esc(CO.name)}</h1>
       <p class="lp-tag">${esc(CO.tagline)}</p>
       <p class="lp-about">${esc(CO.about)}</p>
