@@ -92,6 +92,40 @@
     document.body.appendChild(root);
     document.documentElement.classList.add('lp-open');
     state = { step: 'home' }; render();
+    intro();
+  }
+
+  // ---------- شاشة الترحيب (أول زيارة بس، أو ?intro لإعادتها) ----------
+  // الشعار يرتسم، الجملة تطلع كلمة كلمة، وبعدين الشاشة تنسحب لفوق وتبان الصفحة الأولى
+  const INTRO_LINE = 'عقارك أمانة… ونحن أهلها';
+  function intro() {
+    const force = /[?&]intro\b/.test(location.search);
+    let seen = false; try { seen = localStorage.getItem('saa_intro_seen') === '1'; } catch { }
+    if (seen && !force) return;
+    try { localStorage.setItem('saa_intro_seen', '1'); } catch { }
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ov = document.createElement('div');
+    ov.className = 'lp-intro'; ov.dir = en() ? 'ltr' : 'rtl';
+    const words = INTRO_LINE.split(' ');
+    ov.innerHTML = `<div class="lp-intro-in">
+        <div class="lp-intro-logo">${LOGO(true)}</div>
+        <p class="lp-intro-line">${words.map((w, i) => `<span style="--w:${i}">${esc(w)}</span>`).join(' ')}</p>
+      </div>
+      <button type="button" class="lp-intro-skip">تخطّي</button>`;
+    document.body.appendChild(ov);
+    document.documentElement.classList.add('lp-intro-on');
+    if (window.saaI18n && window.saaI18n.translate) window.saaI18n.translate(ov);
+    let done = false;
+    const leave = () => {
+      if (done) return; done = true;
+      ov.classList.add('out');
+      document.documentElement.classList.remove('lp-intro-on');
+      setTimeout(() => ov.remove(), reduce ? 0 : 750);
+    };
+    ov.querySelector('.lp-intro-skip').addEventListener('click', leave);
+    ov.addEventListener('keydown', e => { if (e.key === 'Escape') leave(); });
+    setTimeout(leave, reduce ? 1500 : 5200); // الجملة تكمل عند ~2.3 ثانية وتبقى ظاهرة ~3 ثواني
+    ov.querySelector('.lp-intro-skip').focus({ preventScroll: true });
   }
 
   // نفس شعار شاشة الدخول بطبقاته المتحركة (motion.css): العمارة تطلع، الأحمر والأخضر والأبيض ينمسحون، والاسم يطلع
