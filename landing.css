@@ -40,7 +40,21 @@ html.lp-open body { overflow: hidden; }
 }
 
 /* ---------- خلفية الخيوط المتحركة (Vanta من theme.js) تبين من ورا الصفحات ---------- */
-body:has(#sx-vanta.on) .lp { background: radial-gradient(1000px 520px at 85% -10%, color-mix(in srgb, var(--k1) 22%, transparent), transparent 60%), transparent; }
+/* أزرق البراند (#0C77AD) فوق ينزل بالتدريج لين لون الصفحة تحت — مثل القائمة الجانبية. الخيوط تبين من خلاله */
+body:has(#sx-vanta.on) .lp { background: linear-gradient(180deg, rgba(12,119,173,.96) 0%, rgba(12,119,173,.82) 22%, rgba(12,119,173,.45) 48%, rgba(12,119,173,0) 78%), transparent; }
+.lp { background: linear-gradient(180deg, #0c77ad 0%, color-mix(in srgb, #0c77ad 55%, var(--bg)) 40%, var(--bg) 78%); }
+/* الفاتح: الأزرق يطوّل أكثر عشان نص الترحيب الأبيض يبين، وبعدين ينزل للأبيض */
+:root[data-skin="sand"] body:has(#sx-vanta.on) .lp { background: linear-gradient(180deg, rgba(12,119,173,.97) 0%, rgba(12,119,173,.92) 45%, rgba(12,119,173,.85) 78%, rgba(12,119,173,.35) 100%), transparent; background-attachment: local; }
+:root[data-skin="sand"] .lp-hero { padding-bottom: 36px; }
+/* النص اللي فوق الأزرق أبيض في الوضعين عشان يبين */
+.lp :is(.lp-top, .lp-hero, .lp-step) { color: #fff; }
+.lp :is(.lp-hero, .lp-step) :is(.lp-tag, .lp-about, p, .muted) { color: rgba(255,255,255,.88) !important; }
+.lp .lp-brand small { color: rgba(255,255,255,.75); }
+.lp .lp-step .lp-back { color: #fff; }
+.lp .lp-chip { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.35); color: #fff; }
+.lp .lp-hero h1 { text-shadow: 0 2px 12px rgba(0,0,0,.25); }
+/* الشعار الأسود يركب مباشرة على الأزرق: اللوح ما له داعي */
+.lp .lp-plate, :root[data-skin="sky"] .lp .lp-plate { background: transparent; border-color: transparent; box-shadow: none; }
 /* بطاقة الدخول اللي تحت الصفحة الأولى ما تبين من ورا الشفافية */
 /* كل اللي داخلها (مب بس الأبناء): خط العلم الأبيض في شعار الدخول عليه visibility:visible صريح فكان يطلع من تحت العنوان */
 html.lp-open .login-wrap * { visibility: hidden !important; }
