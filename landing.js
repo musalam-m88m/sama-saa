@@ -46,6 +46,7 @@
   // ---------- متى تطلع ----------
   const loggedIn = () => { try { return !!localStorage.getItem('saa_token'); } catch { return false; } };
   const atHome = () => ['', '#', '#/', '#/home'].includes(location.hash);
+  const atHomeExplicit = () => location.hash === '#/home';
   let root = null, state = { step: 'home' };
   const en = () => document.documentElement.classList.contains('sx-en');
 
@@ -55,8 +56,33 @@
   }
   function close() { if (root) { root.remove(); root = null; document.documentElement.classList.remove('lp-open'); } }
   function sync() {
-    const show = document.querySelector('.login-wrap') && !loggedIn() && atHome();
+    // قبل الدخول: الصفحة الأولى هي البداية. بعد الدخول: تنفتح بس من رابط «الصفحة الأولى» (#/home)
+    const show = (document.querySelector('.login-wrap') && !loggedIn() && atHome()) || (loggedIn() && atHomeExplicit() && document.querySelector('.top'));
     if (show && !root) open(); else if (!show && root) close();
+    addLoginBack(); addNavLink();
+  }
+
+  // زر رجوع للصفحة الأولى في شاشة الدخول وشاشة أول تشغيل
+  function addLoginBack() {
+    const wrap = document.querySelector('.login-wrap');
+    if (!wrap || root || wrap.querySelector('.lp-loginback')) return;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'v3-back lp-loginback';
+    b.setAttribute('aria-label', en() ? 'Back to home' : 'رجوع للصفحة الأولى');
+    b.innerHTML = svg('back');
+    b.addEventListener('click', () => { location.hash = '#/home'; });
+    wrap.appendChild(b);
+  }
+  // رابط «الصفحة الأولى» في قائمة النظام
+  function addNavLink() {
+    const nav = document.querySelector('.top .nav');
+    if (!nav || nav.querySelector('a[href="#/home"]')) return;
+    const a = document.createElement('a');
+    a.href = '#/home'; a.className = 'lp-navhome';
+    a.innerHTML = `<svg class="v3i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I.buy}</svg>الصفحة الأولى`;
+    const logout = nav.querySelector('#logout');
+    nav.insertBefore(a, logout || null);
+    if (window.saaI18n && window.saaI18n.translate) window.saaI18n.translate(a);
   }
 
   function open() {
@@ -77,7 +103,7 @@
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
-        <button type="button" class="btn pri lp-login" data-a="system">${svg('login', 'v3bi')}دخول النظام</button>
+        <button type="button" class="btn pri lp-login" data-a="system">${svg('login', 'v3bi')}${loggedIn() ? 'الرجوع للنظام' : 'دخول النظام'}</button>
       </div>
     </header>`;
   }
@@ -145,6 +171,10 @@
 
   function viewDone(msg) {
     return `${header()}
+    <section class="lp-step">
+      <button type="button" class="v3-back lp-back" data-a="form" aria-label="رجوع">${svg('back')}</button>
+      <div><h2>${esc(SERVICES.find(x => x.id === state.service).title)}</h2></div>
+    </section>
     <section class="card lp-done">
       <span class="lp-ic lp-ok">${svg('done')}</span>
       <h2>${CO.whatsapp ? 'تم تجهيز طلبك' : 'تم استلام طلبك (تجريبي)'}</h2>
@@ -172,7 +202,12 @@
     root.dir = en() ? 'ltr' : 'rtl'; root.lang = en() ? 'en' : 'ar';
     root.scrollTop = 0; window.scrollTo(0, 0);
     if (window.saaI18n && window.saaI18n.translate) window.saaI18n.translate(root);
-    const f = root.querySelector('#lpForm'); if (f) f.addEventListener('submit', submit);
+    const f = root.querySelector('#lpForm');
+    if (f) {
+      f.addEventListener('submit', submit);
+      // رجوع من «تم الاستلام»: نرجّع اللي كتبه
+      if (state.values) Object.entries(state.values).forEach(([k, v]) => { const el = f.elements[k]; if (el) el.value = v; });
+    }
   }
 
   function submit(e) {
@@ -189,7 +224,7 @@
       `الاسم: ${String(v.name).trim()}`, `الجوال: ${mob}`, v.notes && `ملاحظات: ${String(v.notes).trim()}`].filter(Boolean);
     const msg = lines.join('\n');
     if (CO.whatsapp) window.open(`https://wa.me/${CO.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
-    state = { ...state, step: 'done', msg }; render();
+    state = { ...state, step: 'done', msg, values: v }; render();
   }
 
   // ---------- الضغطات ----------
@@ -207,14 +242,16 @@
     if (act === 'system') goSystem();
     else if (act === 'home') { state = { step: 'home' }; render(); }
     else if (act === 'kinds') { state = { step: 'kinds', service: state.service }; render(); }
+    else if (act === 'form') { state = { step: 'form', service: state.service, kind: state.kind, values: state.values }; render(); }
     else if (act === 'mode') { document.querySelector('.login-wrap .sx-mode, .sx-mode')?.click(); setTimeout(render, 450); }
     else if (act === 'lang') { try { localStorage.setItem('saa_lang', en() ? 'ar' : 'en'); } catch { } location.reload(); }
   });
-  function goSystem() { close(); location.hash = '#/login'; }
+  function goSystem() { close(); location.hash = loggedIn() ? '#/' : '#/login'; }
 
   // ---------- المراقبة ----------
   let q = false;
   new MutationObserver(() => { if (q) return; q = true; setTimeout(() => { q = false; sync(); }, 40); }).observe(document.body, { childList: true, subtree: true });
   addEventListener('hashchange', sync);
+  css(); // زر الرجوع في شاشة الدخول يحتاج الستايل حتى لو الصفحة الأولى ما انفتحت
   sync();
 })();

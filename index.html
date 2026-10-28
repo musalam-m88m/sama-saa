@@ -4598,6 +4598,7 @@ function waModal(title, intro, text, targets) {
   $('#waDone', ov).onclick = closeModal;
 }
 async function route() {
+  if (window.__saaFirstRun) return; // شاشة أول تشغيل مفتوحة: التنقل ما يبدّلها بشاشة الدخول
   closeModal();
   ACTS = new Map();
   if (!S.user) {
@@ -4668,6 +4669,7 @@ window.startSaaApp = () => { S.token = store.get('saa_token') || null; if (S.tok
   }
   // أول تشغيل في هالمتصفح: المدير يختار كلمة المرور بنفسه (تنطبق على كل الحسابات التجريبية)
   function firstRun(done) {
+    window.__saaFirstRun = true;
     const app = document.getElementById('app');
     app.innerHTML = `<div class="login-wrap"><form class="login" id="frForm" autocomplete="off">
       <div class="logo"><b>سما صاع | إدارة العقارات</b></div>
@@ -4687,6 +4689,7 @@ window.startSaaApp = () => { S.token = store.get('saa_token') || null; if (S.tok
       if (a === '0000' || a === '000000' || a === '123456') return err('اختر كلمة مرور أصعب');
       if (a !== b) return err('كلمتين المرور مب متطابقتين');
       app.innerHTML = '<div class="boot"><div class="spin"></div><span>جارِ تجهيز سما صاع…</span></div>';
+      window.__saaFirstRun = false;
       setTimeout(() => done(a), 30);
     });
     document.getElementById('frPw').focus();

@@ -79,6 +79,11 @@ html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
 .lp-ctrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .lp-foot { margin-top: 22px; }
 
+/* زر الرجوع للصفحة الأولى في شاشة الدخول وأول تشغيل */
+.login-wrap { position: relative; }
+.lp-loginback { position: absolute; top: 16px; inset-inline-start: 16px; z-index: 5; width: 44px; height: 44px; color: var(--ink); background: color-mix(in srgb, var(--card) 70%, transparent); border: 1px solid var(--line); border-radius: 50%; }
+.lp-loginback svg { width: 30px; height: 30px; }
+
 @keyframes lpIn { from { opacity: 0; transform: translateY(12px); } }
 @media (max-width: 560px) {
   .lp-brand small { display: none; }
