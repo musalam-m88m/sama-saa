@@ -1,0 +1,90 @@
+/* سما صاع — الصفحة الأولى (landing.js). تغطي شاشة الدخول لين يضغط «دخول النظام» */
+html.lp-open body { overflow: hidden; }
+.lp {
+  position: fixed; inset: 0; z-index: 60; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 0 clamp(16px, 4vw, 48px) 40px; color: var(--ink);
+  background: radial-gradient(1000px 520px at 85% -10%, color-mix(in srgb, var(--k1) 26%, transparent), transparent 60%), var(--bg);
+}
+.lp > * { max-width: 1120px; margin-inline: auto; }
+
+/* الشريط العلوي */
+.lp-top { display: flex; align-items: center; gap: 12px; padding: 16px 0; flex-wrap: wrap; }
+.lp-brand { display: flex; align-items: center; gap: 12px; }
+.lp-brand b { display: block; font-size: 18px; } .lp-brand small { color: var(--ink3); font-size: 12px; letter-spacing: .04em; }
+.lp-logo { position: relative; display: inline-block; height: 58px; aspect-ratio: 900 / 646; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px -8px rgba(0,0,0,.4); }
+.lp-logo img { position: absolute; inset: 6%; width: 88%; height: 88%; object-fit: contain; }
+.lp-tools { margin-inline-start: auto; display: flex; gap: 8px; align-items: center; }
+.lp-chip { min-width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.lp-chip:hover { border-color: var(--k1); }
+
+/* الترحيب */
+.lp-hero { padding: clamp(24px, 6vw, 64px) 0 clamp(18px, 3vw, 28px); text-align: center; }
+.lp-hero h1 { font-size: clamp(30px, 5vw, 52px); line-height: 1.15; margin: 0 0 10px; }
+.lp-tag { font-size: clamp(16px, 2vw, 20px); color: var(--ink2); margin: 0 auto 10px; max-width: 720px; }
+.lp-about { color: var(--ink3); max-width: 760px; margin: 0 auto; line-height: 1.9; }
+
+/* بطاقات الخدمات */
+.lp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 16px; margin-top: 18px; }
+.lp-card {
+  position: relative; text-align: start; display: flex; flex-direction: column; gap: 6px; padding: 22px 20px 50px; min-height: 190px;
+  border-radius: 20px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; cursor: pointer;
+  box-shadow: 0 10px 30px -18px rgba(0,0,0,.45); transition: transform .25s var(--v3-ease, ease), border-color .2s, box-shadow .25s;
+  animation: lpIn .5s var(--v3-ease, ease) both; animation-delay: calc(var(--i, 0) * 60ms);
+}
+.lp-card:hover { transform: translateY(-4px); border-color: var(--k1); box-shadow: 0 18px 36px -18px color-mix(in srgb, var(--k1) 60%, transparent); }
+.lp-card:active { transform: scale(.98); }
+.lp-card:focus-visible { outline: 3px solid var(--k1); outline-offset: 3px; }
+.lp-card b { font-size: 19px; }
+.lp-card > span:not(.lp-ic) { color: var(--ink3); font-size: 14px; line-height: 1.7; }
+.lp-ic { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 6px;
+  background: color-mix(in srgb, var(--k1) 14%, transparent); color: var(--k1); }
+.lp-ic svg { width: 28px; height: 28px; }
+.lp-go { position: absolute; bottom: 14px; inset-inline-end: 16px; width: 30px; height: 30px; color: var(--k1); opacity: .7; transition: transform .25s var(--v3-spring, ease), opacity .2s; }
+.lp-go svg { width: 100%; height: 100%; }
+html:not(.sx-en) .lp-go svg { transform: none; } /* بالعربي السهم يأشر يسار (للأمام) */
+html.sx-en .lp-go svg { transform: scaleX(-1); }
+.lp-card:hover .lp-go { opacity: 1; transform: translateX(-4px); }
+html.sx-en .lp-card:hover .lp-go { transform: translateX(4px); }
+/* إدارة العقارات: البطاقة الرئيسية بلون البراند */
+.lp-main { background: linear-gradient(135deg, var(--k1), color-mix(in srgb, var(--k1) 55%, #04121c)); border-color: transparent; color: #fff; }
+.lp-main > span:not(.lp-ic) { color: rgba(255,255,255,.85); }
+.lp-main .lp-ic { background: rgba(255,255,255,.18); color: #fff; }
+.lp-main .lp-go { color: #fff; }
+/* بطاقة النظام عريضة فوق، والخدمات الأربع تحتها */
+.lp-grid > .lp-main { grid-column: 1 / -1; min-height: 0; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 18px; row-gap: 2px; align-items: center; padding: 24px 26px; padding-inline-end: 70px; }
+.lp-grid > .lp-main .lp-ic { grid-row: 1 / 3; margin: 0; width: 64px; height: 64px; }
+.lp-grid > .lp-main b { font-size: 22px; }
+.lp-grid > .lp-main .lp-go { top: 50%; bottom: auto; transform: translateY(-50%); width: 36px; height: 36px; inset-inline-end: 24px; }
+.lp-grid > .lp-main:hover .lp-go { transform: translate(-4px, -50%); }
+html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
+@media (min-width: 900px) { .lp-grid:not(.lp-kinds) { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.lp-kinds { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); max-width: 900px; }
+
+/* خطوة: زر رجوع + عنوان */
+.lp-step { display: flex; align-items: center; gap: 12px; padding: 18px 0 4px; }
+.lp-step h2 { margin: 0; font-size: clamp(22px, 3vw, 28px); }
+.lp-step p { margin: 2px 0 0; }
+
+/* النموذج */
+.lp-form { max-width: 760px; margin-top: 14px !important; }
+.lp-req { color: var(--red); }
+.lp-send { width: 100%; margin-top: 6px; min-height: 50px; font-size: 17px; }
+.lp-done { max-width: 620px; margin-top: 24px !important; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.lp-done .wa-preview { text-align: start; width: 100%; }
+.lp-ok { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+
+/* التواصل */
+.lp-contact { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; }
+.lp-contact h2 { margin: 0 0 14px; }
+.lp-ctrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.lp-foot { margin-top: 22px; }
+
+@keyframes lpIn { from { opacity: 0; transform: translateY(12px); } }
+@media (max-width: 560px) {
+  .lp-brand small { display: none; }
+  .lp-logo { height: 46px; }
+  .lp-login { padding: 0 12px !important; }
+  .lp-card { min-height: 0; padding-bottom: 46px; }
+}
+@media (prefers-reduced-motion: reduce) { .lp-card { animation: none; transition: none; } }
+@media print { .lp { display: none !important; } }
