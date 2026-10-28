@@ -94,12 +94,17 @@
     state = { step: 'home' }; render();
   }
 
-  const LOGO = '<span class="lp-logo" role="img" aria-label="SAMA SAA Real Estate">' + ['lg-mark-light', 'lg-red', 'lg-green', 'lg-white-full', 'lg-text-light'].map(f => `<img src="logo/${f}.webp" alt="">`).join('') + '</span>';
+  // نفس شعار شاشة الدخول بطبقاته المتحركة (motion.css): العمارة تطلع، الأحمر والأخضر والأبيض ينمسحون، والاسم يطلع
+  const LOGO = full => `<span class="sx-logo lp-anim${full ? ' full' : ''}" role="img" aria-label="SAMA SAA Real Estate">
+    <img class="sx-l-mark l" src="logo/lg-mark-light.webp" alt=""><img class="sx-l-mark d" src="logo/lg-mark-dark.webp" alt="">
+    <img class="sx-l-red" src="logo/lg-red.webp" alt=""><img class="sx-l-green" src="logo/lg-green.webp" alt=""><img class="sx-l-white-full" src="logo/lg-white-full.webp" alt="">
+    ${full ? '<img class="sx-l-text l" src="logo/lg-text-light.webp" alt=""><img class="sx-l-text d" src="logo/lg-text-dark.webp" alt="">' : ''}
+  </span>`;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   function header() {
     return `<header class="lp-top">
-      <div class="lp-brand">${LOGO}<div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
+      <div class="lp-brand">${LOGO(false)}<div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
@@ -111,6 +116,7 @@
   function viewHome() {
     return `${header()}
     <section class="lp-hero">
+      <div class="lp-herologo">${LOGO(true)}</div>
       <h1>${esc(CO.name)}</h1>
       <p class="lp-tag">${esc(CO.tagline)}</p>
       <p class="lp-about">${esc(CO.about)}</p>
