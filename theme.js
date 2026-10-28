@@ -278,7 +278,8 @@
   function stopVanta() { if (vanta) { vanta.destroy(); vanta = null; } document.getElementById('sx-vanta')?.remove(); }
   function onLogin() {
     const wrap = document.querySelector('.login-wrap');
-    if (!wrap) { stopVanta(); return; }
+    // الصفحة الأولى مفتوحة فوقها بخلفيتها (الضباب): نوقف الخيوط عشان ما يشتغل رسمين مع بعض
+    if (!wrap || document.documentElement.classList.contains('lp-open')) { stopVanta(); return; }
     if (vanta || vantaLoading || reduce || (navigator.hardwareConcurrency || 4) < 4) return;
     let box = document.getElementById('sx-vanta');
     if (!box) { box = document.createElement('div'); box.id = 'sx-vanta'; box.setAttribute('aria-hidden', 'true'); document.body.prepend(box); }
@@ -301,6 +302,7 @@
     if (!vanta) return;
     stopVanta(); onLogin();
   }
+  window.sxNet = { stop: stopVanta, check: onLogin };
   onLogin();
   addLoginBar();
   new MutationObserver(onLogin).observe(document.getElementById('app'), { childList: true });

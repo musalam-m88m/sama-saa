@@ -54,7 +54,7 @@
     if (document.querySelector('link[href^="landing.css"]')) return;
     const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'landing.css'; document.head.appendChild(l);
   }
-  function close() { if (root) { root.remove(); root = null; document.documentElement.classList.remove('lp-open'); if (window.lpBg) window.lpBg.hide(); } }
+  function close() { if (root) { root.remove(); root = null; document.documentElement.classList.remove('lp-open'); if (window.lpBg) window.lpBg.hide(); if (window.sxNet) window.sxNet.check(); } }
   // خلفية الصفحة الأولى المتحركة: ضباب (lp-bg.js)
   function bg() {
     if (window.lpBg) return window.lpBg.show();

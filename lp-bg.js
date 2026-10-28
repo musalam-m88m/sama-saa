@@ -5,7 +5,9 @@
   const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js';
   const B = 0x0c77ad, SKY = 0x38bdf8, NAVY = 0x07141f;
   const LIGHT = () => document.documentElement.dataset.skin === 'sand';
-  const opts = () => ({ highlightColor: SKY, midtoneColor: B, lowlightColor: NAVY, baseColor: LIGHT() ? B : NAVY, blurFactor: .62, speed: 1.1, zoom: .9 });
+  // الضباب ناعم أصلاً، فنرسمه بنص دقة الشاشة (ربع البكسلات) عشان ما يثقل على الآيباد والتلفون
+  const S = (window.devicePixelRatio || 1) * 2;
+  const opts = () => ({ scale: S, scaleMobile: S, highlightColor: SKY, midtoneColor: B, lowlightColor: NAVY, baseColor: LIGHT() ? B : NAVY, blurFactor: .62, speed: 1.1, zoom: .9 });
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const loaded = {};
   const js = src => loaded[src] || (loaded[src] = new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }));
@@ -15,6 +17,7 @@
   async function start() {
     const my = ++token;
     stop();
+    if (window.sxNet) window.sxNet.stop(); // خيوط شاشة الدخول اللي تحت ما تنشاف، فنوقفها
     if (reduce) return; // بدون حركة: تظل خيوط شاشة الدخول كما هي
     box = document.createElement('div'); box.id = 'lp-bg'; box.setAttribute('aria-hidden', 'true');
     document.body.appendChild(box);
@@ -23,7 +26,7 @@
       if (!window.THREE) await js(THREE_URL);
       await js(FOG_URL);
       if (my !== token || !box) return;
-      fx = window.VANTA.FOG({ el: box, mouseControls: true, touchControls: true, gyroControls: false, scale: 1, scaleMobile: 1, ...opts() });
+      fx = window.VANTA.FOG({ el: box, mouseControls: true, touchControls: true, gyroControls: false, ...opts() });
     } catch { stop(); }
   }
 

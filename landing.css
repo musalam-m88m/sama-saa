@@ -60,6 +60,8 @@ body:has(#sx-vanta.on) .lp { background: linear-gradient(180deg, rgba(12,119,173
 html.lp-open .login-wrap * { visibility: hidden !important; }
 /* البطاقات زجاج خفيف عشان الخيوط تبين حواليها */
 body:has(#sx-vanta.on) .lp :is(.lp-card:not(.lp-main), .lp-form, .lp-done) { background: color-mix(in srgb, var(--card) 86%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+/* فوق الضباب: شفافية بدون blur، لأن الـ blur فوق خلفية تتحرك يعيد الحساب كل إطار ويثقّل الصفحة */
+html.lp-bg-on .lp :is(.lp-card:not(.lp-main), .lp-form, .lp-done) { background: color-mix(in srgb, var(--card) 90%, transparent); }
 .lp-tools { margin-inline-start: auto; display: flex; gap: 8px; align-items: center; }
 .lp-chip { min-width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
 .lp-chip:hover { border-color: var(--k1); }
