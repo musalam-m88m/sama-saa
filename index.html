@@ -628,6 +628,7 @@ else if (typeof exports === 'object'){
 
 </script>
 <script>
+
 document.documentElement.setAttribute('dir','rtl'); document.documentElement.setAttribute('lang','ar');
 'use strict';
 // صاع | إدارة العقارات — نسخة تجريبية تعمل داخل المتصفح (قاعدة SQLite داخل الصفحة)
@@ -2508,7 +2509,7 @@ function demoPdf(title) {
 function addMonths(s, n) { const d = new Date(s + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + n); return d.toISOString().slice(0, 10); }
 function addDays(s, n) { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
 
-function seedSaa(api) {
+function seedSaa(api, firstPassword) { // firstPassword: اللي يختاره المدير أول تشغيل — ما في كلمة مرور مكتوبة في الكود
   const { db, hashPassword, todayUAE, migrateContracts } = api;
   const today = todayUAE();
   const now = new Date().toISOString();
@@ -2523,7 +2524,7 @@ function seedSaa(api) {
   };
 
   db.exec('BEGIN');
-  const pw = hashPassword('0000');
+  const pw = hashPassword(firstPassword);
   const addUser = (u, role, name, owner) => db.prepare('INSERT INTO users (username, pass_hash, role, display_name, owner_id, active, created_at) VALUES (?,?,?,?,?,1,?)').run(u, pw, role, name, owner, now);
   addUser('ادمن', 'office_manager', 'الإدارة', null);
   addUser('مديرمكتب', 'office_manager', 'مدير المكتب', null);
@@ -2803,7 +2804,7 @@ function shell(html, active) {
       <span class="who">${esc(u.display_name)} · ${esc(u.role_name)}</span>
     </nav></div></header>
   ${!S.weak && HAS_SERVER && isStaff() && !S.totp ? `<div class="weakbar soft"><span>ننصح بتفعيل التحقق بخطوتين لحسابك لحماية الجوازات والإيصالات.</span><a class="btn sm" href="#/account">تفعيل</a></div>` : ''}
-  ${S.weak ? `<div class="weakbar"><span>أنت تستخدم كلمة المرور الافتراضية ٠٠٠٠. غيّرها قبل إدخال بيانات حقيقية.</span><a class="btn sm" href="#/account">تغيير كلمة المرور</a></div>` : ''}
+  ${S.weak ? `<div class="weakbar"><span>أنت تستخدم كلمة المرور الافتراضية. غيّرها قبل إدخال بيانات حقيقية.</span><a class="btn sm" href="#/account">تغيير كلمة المرور</a></div>` : ''}
   <main id="main">${html}</main>`;
   if ($('#gsBtn')) $('#gsBtn').onclick = globalSearch;
   $('#logout').onclick = async () => { try { await api('POST', '/api/logout'); } catch { } S.user = null; S.token = null; store.set('saa_token', ''); store.set('saa_uid', ''); alertTimer = 0; location.hash = ''; renderLogin(); };
@@ -4665,6 +4666,31 @@ window.startSaaApp = () => { S.token = store.get('saa_token') || null; if (S.tok
       catch { persistent = false; if (window.toast) toast('المتصفح لا يسمح بحفظ البيانات، التعديلات ستضيع عند الإغلاق', true); }
     }, 250);
   }
+  // أول تشغيل في هالمتصفح: المدير يختار كلمة المرور بنفسه (تنطبق على كل الحسابات التجريبية)
+  function firstRun(done) {
+    const app = document.getElementById('app');
+    app.innerHTML = `<div class="login-wrap"><form class="login" id="frForm" autocomplete="off">
+      <div class="logo"><b>سما صاع | إدارة العقارات</b></div>
+      <h2 style="margin:0 0 6px">أول تشغيل</h2>
+      <p class="muted small" style="margin:0 0 14px">اختر كلمة مرور المدير. تنطبق على كل الحسابات (ادمن، محاسب، مالك1…) وتقدر تغيّرها بعدين من «حسابي». تنحفظ في هالمتصفح بس.</p>
+      <div class="f"><label for="frPw">كلمة المرور</label><input id="frPw" type="password" inputmode="text" autocomplete="new-password" required></div>
+      <div class="f"><label for="frPw2">تأكيد كلمة المرور</label><input id="frPw2" type="password" autocomplete="new-password" required></div>
+      <div class="err" id="frErr" hidden></div>
+      <button class="btn pri" type="submit" style="width:100%">ابدأ</button>
+    </form></div>`;
+    const norm = s => String(s || '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).trim();
+    const err = m => { const e = document.getElementById('frErr'); e.textContent = m; e.hidden = false; };
+    document.getElementById('frForm').addEventListener('submit', ev => {
+      ev.preventDefault();
+      const a = norm(document.getElementById('frPw').value), b = norm(document.getElementById('frPw2').value);
+      if (a.length < 6) return err('كلمة المرور لازم تكون 6 خانات على الأقل');
+      if (a === '0000' || a === '000000' || a === '123456') return err('اختر كلمة مرور أصعب');
+      if (a !== b) return err('كلمتين المرور مب متطابقتين');
+      app.innerHTML = '<div class="boot"><div class="spin"></div><span>جارِ تجهيز سما صاع…</span></div>';
+      setTimeout(() => done(a), 30);
+    });
+    document.getElementById('frPw').focus();
+  }
   window.saaReset = async () => { try { await IDB.set('db6', null); } catch { } try { localStorage.removeItem('saa_token'); localStorage.removeItem('saa_uid'); } catch { } location.hash = ''; location.reload(); };
   window.addEventListener('load', async () => {
     if (typeof initSqlJs !== 'function') return fail('لم تُحمَّل مكتبة قاعدة البيانات. تحقق من الاتصال بالإنترنت ثم حدّث الصفحة.');
@@ -4674,9 +4700,9 @@ window.startSaaApp = () => { S.token = store.get('saa_token') || null; if (S.tok
       sdb = saved ? new SQL.Database(saved) : new SQL.Database();
       const api = createSaaApi(adapter(sdb), { onChange: save });
       const hasUsers = (() => { try { return api.q1('SELECT COUNT(*) c FROM users').c > 0; } catch { return false; } })();
-      if (!hasUsers) { seedSaa(api); save(); }
       window.SAA = api;
-      window.startSaaApp();
+      if (!hasUsers) firstRun(pw => { seedSaa(api, pw); save(); window.startSaaApp(); });
+      else window.startSaaApp();
     } catch (e) { console.error(e); fail('حدث خطأ أثناء تجهيز البيانات. حدّث الصفحة.'); }
   });
 })();

@@ -69,7 +69,7 @@
     'تكييف': 'A/C', 'سباكة': 'Plumbing', 'كهرباء': 'Electrical', 'نجارة وأبواب': 'Carpentry & doors', 'دهان': 'Painting', 'أجهزة': 'Appliances', 'أخرى': 'Other',
     'سند الملكية': 'Title deed', 'وثيقة التأمين': 'Insurance policy', 'شهادة الدفاع المدني': 'Civil defence certificate', 'عقد الصيانة': 'Maintenance contract', 'رخصة': 'Licence', 'مستند آخر': 'Other document',
     // من جولة الفحص الثانية
-    'سما صاع': 'Sama Saa', '| إدارة العقارات': '| Property management', 'أنت تستخدم كلمة المرور الافتراضية ٠٠٠٠. غيّرها قبل إدخال بيانات حقيقية.': 'You are using the default password 0000. Change it before entering real data.',
+    'سما صاع': 'Sama Saa', '| إدارة العقارات': '| Property management', 'أنت تستخدم كلمة المرور الافتراضية. غيّرها قبل إدخال بيانات حقيقية.': 'You are using the default password. Change it before entering real data.',
     'ننصح بتفعيل التحقق بخطوتين لحسابك لحماية الجوازات والإيصالات.': 'We recommend enabling two-step verification to protect passports and receipts.',
     'مأجّرة من': 'rented of', 'خسارة الشغور': 'Vacancy loss', 'الفرق': 'Difference', 'تكلفة الصيانة': 'Maintenance cost', 'الشقق الشاغرة': 'Vacant units', 'كل الشقق مأجّرة 👍': 'All units rented 👍',
     'المستحق حسب موعد الاستحقاق، والمحصّل حسب تاريخ الدفع الفعلي': 'Due by due date, collected by actual payment date', 'المحصّل − عمولة الإدارة − الصيانة − مصاريف العقار': 'Collected − management fee − maintenance − property expenses',
@@ -202,6 +202,11 @@
     // بطاقة المحصّل مقابل المستحق (theme.js)
     'المحصّل من مستحق السنة كاملة': "Collected of the full year's dues", 'درهم:': 'AED:', 'متأخر، و': 'overdue, and', 'ما حل موعده للحين': 'not due yet',
     'المستحق': 'Due', 'المحصّل': 'Collected',
+    // شاشة أول تشغيل (اختيار كلمة مرور المدير)
+    'أول تشغيل': 'First run', 'سما صاع | إدارة العقارات': 'Sama Saa | Property management', 'تأكيد كلمة المرور': 'Confirm password', 'ابدأ': 'Start',
+    'اختر كلمة مرور المدير. تنطبق على كل الحسابات (ادمن، محاسب، مالك1…) وتقدر تغيّرها بعدين من «حسابي». تنحفظ في هالمتصفح بس.': 'Choose the manager password. It applies to all accounts (admin, accountant, owner1…) and you can change it later from “My account”. It is saved in this browser only.',
+    'كلمة المرور لازم تكون 6 خانات على الأقل': 'Password must be at least 6 characters', 'اختر كلمة مرور أصعب': 'Choose a stronger password', 'كلمتين المرور مب متطابقتين': 'The two passwords do not match',
+    'جارِ تجهيز سما صاع…': 'Preparing Sama Saa…',
     'تحميل PDF': 'Download PDF', 'جارِ تجهيز الـ PDF…': 'Preparing PDF…', 'تم تحميل الـ PDF': 'PDF downloaded', 'انلغى التحميل': 'Download cancelled',
   });
   // المبلغ كتابةً في السند: نحوّل الكلمات العربية لرقم ثم لكلمات إنجليزية
