@@ -204,7 +204,7 @@
     'المستحق': 'Due', 'المحصّل': 'Collected',
     // الصفحة الأولى (landing.js)
     'تخطّي': 'Skip', 'عقارك': 'Your property', 'أمانة…': 'is a trust…', 'ونحن': 'and we', 'أهلها': 'keep it',
-    'سما صاع للعقارات': 'Sama Saa Real Estate', 'دخول النظام': 'Sign in to system', 'الرجوع للنظام': 'Back to system', 'الصفحة الأولى': 'Home page',
+    'سما صاع للعقارات': 'Sama Saa Real Estate', 'دخول النظام': 'Sign in to system', 'بوابة الملاك': 'Owners portal', 'الرجوع للنظام': 'Back to system', 'الصفحة الأولى': 'Home page',
     'شريككم في إدارة وتأجير وبيع وشراء وتقييم العقارات في دولة الإمارات': 'Your partner in managing, renting, selling, buying and valuing property in the UAE',
     'نهتم بعقاراتكم كأنها عقاراتنا: نتابع المستأجرين والتحصيل والصيانة، ونرسل للمالك كشفاً واضحاً كل شهر. ونساعدكم في البيع والشراء والتقييم بخبرة في سوق العين وأبوظبي.': 'We care for your properties as if they were our own: we follow up tenants, collections and maintenance, and send the owner a clear statement every month. We also help you sell, buy and value property with experience in the Al Ain and Abu Dhabi markets.',
     'إدارة العقارات': 'Property management', 'تأجير العقارات': 'Property rental', 'بيع العقارات': 'Sell property', 'شراء العقارات': 'Buy property', 'تقييم العقارات': 'Property valuation',

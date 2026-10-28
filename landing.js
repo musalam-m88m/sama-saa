@@ -110,7 +110,7 @@
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
-        <button type="button" class="btn pri lp-login" data-a="system">${svg('login', 'v3bi')}${loggedIn() ? 'الرجوع للنظام' : 'دخول النظام'}</button>
+        <button type="button" class="btn pri lp-login" data-a="system">${svg('login', 'v3bi')}${loggedIn() ? 'الرجوع للنظام' : 'بوابة الملاك'}</button>
       </div>
     </header>`;
   }
