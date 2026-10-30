@@ -76,6 +76,7 @@
   };
   const ROOMS = ['استوديو', '1', '2', '3', '4', '5', '6', '7+'];
   const FLOORS = ['أي طابق', 'الأرضي', ...Array.from({ length: 15 }, (_, i) => String(i + 1)), 'أعلى من 15'];
+  const STOREYS = [...Array.from({ length: 20 }, (_, i) => String(i + 1)), 'أكثر من 20'];
   const TYPES = { done: ['شقة', 'فيلا', 'بناية', 'محل / مكتب'], build: ['شقة', 'فيلا', 'بناية', 'مشروع كامل'], land: ['سكنية', 'تجارية', 'استثمارية', 'صناعية'], rent: ['شقة', 'فيلا', 'محل', 'مكتب'] };
 
   // ---------- متى تطلع ----------
@@ -212,9 +213,10 @@
         <input id="lp_area" name="area" type="text" autocomplete="off" placeholder="اكتب اسم المنطقة أو اختر من القائمة" role="combobox" aria-expanded="false" aria-controls="lpAreaList" aria-autocomplete="list">
         <ul id="lpAreaList" class="lp-combo-list" role="listbox" hidden></ul>
       </div>
-      <div class="row2" data-only="rooms">
-        ${field('rooms', 'عدد الغرف', sel('rooms', ROOMS))}
+      <div class="row2" data-only="extra">
+        <div data-only="rooms">${field('rooms', 'عدد الغرف', sel('rooms', ROOMS))}</div>
         <div data-only="floor">${field('floor', 'الطابق', sel('floor', FLOORS))}</div>
+        <div data-only="storeys">${field('storeys', 'عدد الطوابق', sel('storeys', STOREYS))}</div>
       </div>
       <div class="row2">
         ${field('size', k === 'land' ? 'مساحة الأرض (قدم²)' : 'المساحة (قدم²) — اختياري', inp('size', 'text', '', false, 'inputmode="numeric"'))}
@@ -280,12 +282,11 @@
   const norm = s => String(s || '').toLowerCase().trim().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ');
   function setupForm(f) {
     const type = f.elements.type, city = f.elements.city, area = f.elements.area, list = f.querySelector('#lpAreaList');
-    // الغرف للشقة والفيلا، والطابق للشقة بس. الخانة المخفية تنقفل عشان ما تدخل في الطلب
+    // الغرف للشقة والفيلا، والطابق للشقة، وعدد الطوابق للبناية. الخانة المخفية تنقفل عشان ما تدخل في الطلب
     const toggle = () => {
-      const t = type.value, rooms = t === 'شقة' || t === 'فيلا', floor = t === 'شقة';
-      const r = f.querySelector('[data-only="rooms"]'), fl = f.querySelector('[data-only="floor"]');
-      r.hidden = !rooms; f.elements.rooms.disabled = !rooms;
-      fl.hidden = !floor; f.elements.floor.disabled = !floor;
+      const t = type.value, on = { rooms: t === 'شقة' || t === 'فيلا', floor: t === 'شقة', storeys: t === 'بناية' };
+      Object.entries(on).forEach(([k, v]) => { f.querySelector(`[data-only="${k}"]`).hidden = !v; f.elements[k].disabled = !v; });
+      f.querySelector('[data-only="extra"]').hidden = !Object.values(on).some(Boolean);
       [...f.elements.rooms.options].forEach(o => { o.hidden = t === 'فيلا' && o.value === 'استوديو'; });
       if (t === 'فيلا' && f.elements.rooms.value === 'استوديو') f.elements.rooms.value = '3';
     };
@@ -329,6 +330,7 @@
       `${L('الخدمة', 'Service')}: ${T(s.title)}${state.kind ? ' — ' + T(KIND[state.kind][0]) : ''}`,
       v.want && `${L('تبي', 'Wants to')}: ${T(v.want)}`, `${L('نوع العقار', 'Property type')}: ${T(v.type)}`, v.city && `${L('المدينة', 'City')}: ${T(v.city)}`, v.area && `${L('المنطقة', 'Area')}: ${String(v.area).trim()}`,
       v.rooms && `${L('عدد الغرف', 'Bedrooms')}: ${T(v.rooms)}`, v.floor && `${L('الطابق', 'Floor')}: ${T(v.floor)}`,
+      v.storeys && `${L('عدد الطوابق', 'Number of floors')}: ${T(v.storeys)}`,
       v.size && `${L('المساحة', 'Size')}: ${v.size} ${L('قدم²', 'sq ft')}`,
       v.budget && `${L('الميزانية', 'Budget')}: ${v.budget} ${L('درهم', 'AED')}`, v.price && `${L('السعر المتوقع', 'Expected price')}: ${v.price} ${L('درهم', 'AED')}`,
       v.purpose && `${L('الغرض', 'Purpose')}: ${T(v.purpose)}`,
