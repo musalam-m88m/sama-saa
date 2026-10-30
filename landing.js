@@ -114,7 +114,7 @@
 
   function header() {
     return `<header class="lp-top">
-      <div class="lp-brand"><span class="lp-plate">${LOGO(true)}</span><div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
+      <div class="lp-brand"><div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
