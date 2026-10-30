@@ -12,7 +12,15 @@
     email: '',
     address: 'العين — الإمارات العربية المتحدة',
     mapUrl: '',
+    facebook: '',
+    twitter: '',
+    instagram: '',
   };
+  const SOCIAL = [
+    ['facebook', 'Facebook', 'M14 8V6.3c0-.8.2-1.3 1.4-1.3H17V2.2C16.7 2.1 15.7 2 14.6 2 12.2 2 10.5 3.5 10.5 6.1V8H8v3.2h2.5V22H14V11.2h2.7L17.1 8z'],
+    ['twitter', 'Twitter', 'M23 4.6c-.8.4-1.7.6-2.6.7.9-.6 1.6-1.4 2-2.5-.9.5-1.9.9-2.9 1.1a4.5 4.5 0 0 0-7.7 4.1A12.8 12.8 0 0 1 2.5 3.3a4.5 4.5 0 0 0 1.4 6 4.5 4.5 0 0 1-2-.6v.1c0 2.2 1.5 4 3.6 4.4-.7.2-1.4.2-2 .1.6 1.8 2.2 3.1 4.2 3.1A9 9 0 0 1 1 18.3 12.8 12.8 0 0 0 7.9 20.3c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.7-1.4 2.3-2.3z'],
+    ['instagram', 'Instagram', 'M12 2.2c3.2 0 3.6 0 4.8.1 3.2.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z'],
+  ];
 
   // ---------- الخدمات ----------
   const I = {
@@ -114,7 +122,7 @@
 
   function header() {
     return `<header class="lp-top">
-      <div class="lp-brand"><div><b>${esc(CO.name)}</b>${en() ? '' : '<small class="sx-no-tr">Sama Saa Real Estate</small>'}</div></div>
+      <div class="lp-social">${SOCIAL.map(([k, label, d]) => `<a class="lp-soc" href="${esc(CO[k] || '#')}"${CO[k] ? ' target="_blank" rel="noopener"' : ''} aria-label="${label}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg></a>`).join('')}</div>
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
