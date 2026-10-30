@@ -13,7 +13,7 @@
     address: 'العين — الإمارات العربية المتحدة',
     mapUrl: 'https://www.google.com/maps/place/%D8%B3%D9%85%D8%A7+%D8%B5%D8%A7%D8%B9+%D9%84%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D8%A7%D8%AA+%D9%88%D8%A7%D9%84%D8%B5%D9%8A%D8%A7%D9%86%D8%A9+%D8%A7%D9%84%D8%B9%D8%A7%D9%85%D8%A9/@24.2179389,55.7597916,17z',
     // إحداثيات المكتب من المالك: 24°13'04.5"N 55°45'37.0"E
-    lat: 24.217917, lng: 55.760278, mapDemo: false,
+    lat: 24.217917, lng: 55.760278,
     tiktok: '',
     instagram: '',
     website: '',
@@ -221,15 +221,8 @@
       CO.email && `<a class="btn lp-ct" href="mailto:${CO.email}">${svg('mail', 'v3bi')}إيميل</a>`,
       (mapLink || CO.address) && `<a class="btn lp-ct" ${mapLink ? `href="${esc(mapLink)}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
     ].filter(Boolean);
-    // خريطة قوقل مدمجة (ما تحتاج مفتاح)، تنحمّل بس لما يوصل لها الزائر
-    const map = CO.lat ? `<div class="lp-map">
-        <iframe src="https://maps.google.com/maps?q=${CO.lat},${CO.lng}&z=15&hl=${en() ? 'en' : 'ar'}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${esc(CO.address)}"></iframe>
-        <a class="btn pri lp-mapgo" href="${esc(mapLink)}" target="_blank" rel="noopener">${svg('pin', 'v3bi')}افتح في خرايط قوقل</a>
-        ${CO.mapDemo ? '<span class="lp-mapdemo">موقع تقريبي للتجربة</span>' : ''}
-      </div>` : '';
     const social = SOCIAL.map(([k, label, d, url = v => v]) => `<a class="lp-soc" href="${esc(CO[k] ? url(CO[k]) : '#')}"${CO[k] ? ' target="_blank" rel="noopener"' : ''} aria-label="${label}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg></a>`).join('');
     return `<section class="lp-contact" id="lpContact"><h2>تواصل معنا</h2><div class="lp-ctrow">${items.join('') || '<span class="muted">معلومات التواصل تنضاف قريباً</span>'}</div>
-      ${map}
       <div class="lp-social">${social}</div>
       <p class="lp-foot muted small">© ${new Date().getFullYear()} ${esc(CO.name)}</p></section>`;
   }
