@@ -266,18 +266,32 @@
     if (card) {
       const s = SERVICES.find(x => x.id === card.dataset.s);
       if (s.go === 'system') return goSystem();
-      state = { step: s.kinds ? 'kinds' : 'form', service: s.id }; return render();
+      return go({ step: s.kinds ? 'kinds' : 'form', service: s.id });
     }
-    if (kind) { state = { ...state, step: 'form', kind: kind.dataset.k }; return render(); }
+    if (kind) return go({ ...state, step: 'form', kind: kind.dataset.k });
     if (!a) return;
     const act = a.dataset.a;
     if (act === 'system') goSystem();
-    else if (act === 'home') { state = { step: 'home' }; render(); }
-    else if (act === 'kinds') { state = { step: 'kinds', service: state.service }; render(); }
-    else if (act === 'form') { state = { step: 'form', service: state.service, kind: state.kind, values: state.values }; render(); }
-    else if (act === 'mode') { document.querySelector('.login-wrap .sx-mode, .sx-mode')?.click(); setTimeout(render, 450); }
+    else if (act === 'home') go({ step: 'home' });
+    else if (act === 'kinds') go({ step: 'kinds', service: state.service });
+    else if (act === 'form') go({ step: 'form', service: state.service, kind: state.kind, values: state.values });
+    // داكن/فاتح: نغيّر أيقونة الزر بس، بدون ما نعيد رسم الصفحة (كان يعيد حركة الشعار ويقطّع)
+    else if (act === 'mode') { document.querySelector('.login-wrap .sx-mode, .sx-mode')?.click(); setTimeout(() => { a.textContent = document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'; }, 450); }
     else if (act === 'lang') { try { localStorage.setItem('saa_lang', en() ? 'ar' : 'en'); } catch { } location.reload(); }
   });
+  // تنقّل ناعم بين الخطوات: المحتوى يختفي بهدوء، ثم الجديد يطلع (lp-in في landing.css)
+  let busy = false;
+  function go(next) {
+    if (busy || !root) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { state = next; return render(); }
+    busy = true; root.classList.add('lp-out');
+    setTimeout(() => {
+      state = next; render(); busy = false;
+      if (!root) return;
+      root.classList.replace('lp-out', 'lp-in');
+      setTimeout(() => root && root.classList.remove('lp-in'), 400);
+    }, 160);
+  }
   function goSystem() { close(); location.hash = loggedIn() ? '#/' : '#/login'; }
 
   // ---------- المراقبة ----------

@@ -137,6 +137,7 @@ html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
 .lp-ctrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .lp-foot { margin-top: 22px; }
 /* سطر © فوق السحاب المتحرك: أبيض بظل خفيف عشان يبين في الداكن والفاتح */
+:root[data-skin="sand"] .lp .lp-step :is(h2, p) { text-shadow: 0 1px 6px rgba(0,40,70,.55); }
 .lp .lp-foot { color: #fff; opacity: .9; font-weight: 600; text-shadow: 0 1px 6px rgba(0,40,70,.55); }
 
 /* زر الرجوع للصفحة الأولى في شاشة الدخول وأول تشغيل */
@@ -155,6 +156,10 @@ html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
 body:has(#sx-vanta.on) .lp-intro { background: radial-gradient(900px 600px at 50% 35%, rgba(12,119,173,.55), rgba(7,20,31,.35) 75%); }
 html.lp-intro-on .lp > * { opacity: 0; transition: none; }
 .lp > * { transition: opacity .6s ease .15s; }
+/* التنقّل بين الخطوات (go في landing.js): الشريط العلوي ثابت، والباقي يختفي ويطلع بنعومة */
+.lp.lp-out > :not(.lp-top) { opacity: 0; transform: translateY(-6px); transition: opacity .16s ease, transform .16s ease; }
+.lp.lp-in > :not(.lp-top) { animation: lpIn .34s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes lpIn { from { opacity: 0; transform: translateY(10px); } }
 .lp-intro.out { transform: translateY(-100%); opacity: .6; }
 .lp-intro-in { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 .lp-intro-logo .sx-logo { width: min(440px, 80vw); }
