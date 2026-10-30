@@ -124,7 +124,7 @@
 
   function header() {
     return `<header class="lp-top">
-      <div class="lp-social">${SOCIAL.map(([k, label, d, url = v => v]) => `<a class="lp-soc" href="${esc(CO[k] ? url(CO[k]) : '#')}"${CO[k] ? ' target="_blank" rel="noopener"' : ''} aria-label="${label}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg></a>`).join('')}</div>
+      <button type="button" class="lp-chip lp-tocontact" data-a="contact">${svg('phone', 'v3bi')}تواصل معنا</button>
       <div class="lp-tools">
         <button type="button" class="lp-chip sx-no-tr" data-a="lang" aria-label="${en() ? 'العربية' : 'English'}">${en() ? 'ع' : 'EN'}</button>
         <button type="button" class="lp-chip" data-a="mode" aria-label="داكن / فاتح">${document.documentElement.dataset.skin === 'sand' ? '☾' : '☀'}</button>
@@ -218,7 +218,9 @@
       CO.email && `<a class="btn lp-ct" href="mailto:${CO.email}">${svg('mail', 'v3bi')}إيميل</a>`,
       (CO.mapUrl || CO.address) && `<a class="btn lp-ct" ${CO.mapUrl ? `href="${CO.mapUrl}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
     ].filter(Boolean);
-    return `<section class="lp-contact"><h2>تواصل معنا</h2><div class="lp-ctrow">${items.join('') || '<span class="muted">معلومات التواصل تنضاف قريباً</span>'}</div>
+    const social = SOCIAL.map(([k, label, d, url = v => v]) => `<a class="lp-soc" href="${esc(CO[k] ? url(CO[k]) : '#')}"${CO[k] ? ' target="_blank" rel="noopener"' : ''} aria-label="${label}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg></a>`).join('');
+    return `<section class="lp-contact" id="lpContact"><h2>تواصل معنا</h2><div class="lp-ctrow">${items.join('') || '<span class="muted">معلومات التواصل تنضاف قريباً</span>'}</div>
+      <div class="lp-social">${social}</div>
       <p class="lp-foot muted small">© ${new Date().getFullYear()} ${esc(CO.name)}</p></section>`;
   }
 
@@ -272,6 +274,7 @@
     if (!a) return;
     const act = a.dataset.a;
     if (act === 'system') goSystem();
+    else if (act === 'contact') toContact();
     else if (act === 'home') go({ step: 'home' });
     else if (act === 'kinds') go({ step: 'kinds', service: state.service });
     else if (act === 'form') go({ step: 'form', service: state.service, kind: state.kind, values: state.values });
@@ -291,6 +294,12 @@
       root.classList.replace('lp-out', 'lp-in');
       setTimeout(() => root && root.classList.remove('lp-in'), 400);
     }, 160);
+  }
+  // زر «تواصل معنا» فوق: ينزل بنعومة لقسم التواصل آخر الصفحة الأولى (ولو في خطوة ثانية، يرجع للأولى أول)
+  function toContact() {
+    const down = () => root && root.querySelector('#lpContact')?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (state.step === 'home') return down();
+    go({ step: 'home' }); setTimeout(down, 450);
   }
   function goSystem() { close(); location.hash = loggedIn() ? '#/' : '#/login'; }
 

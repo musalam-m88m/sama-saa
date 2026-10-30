@@ -12,7 +12,10 @@ html.lp-open body { overflow: hidden; }
 .lp-brand { display: flex; align-items: center; gap: 12px; }
 .lp-brand b { display: block; font-size: 18px; } .lp-brand small { color: var(--ink3); font-size: 12px; letter-spacing: .04em; }
 /* أزرار التواصل: دوائر شبه شفافة بلون الخلفية (بدون blur عشان الأداء) */
-.lp-social { display: flex; gap: 12px; direction: ltr; }
+.lp-social { display: flex; gap: 12px; direction: ltr; justify-content: center; margin-top: 18px; }
+.lp-tocontact { display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; }
+.lp-tocontact .v3bi { width: 17px; height: 17px; }
+.lp-contact { scroll-margin-bottom: 24px; }
 .lp-soc { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
   background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.32); color: #fff;
   box-shadow: 0 8px 18px -8px rgba(0,0,0,.45); transition: transform .2s, background .2s, box-shadow .2s; }
