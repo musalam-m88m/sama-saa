@@ -12,6 +12,8 @@
     email: '',
     address: 'العين — الإمارات العربية المتحدة',
     mapUrl: '',
+    // إحداثيات المكتب للخريطة (حالياً وسط العين للتجربة، تنبدل بإحداثيات المكتب الحقيقية)
+    lat: 24.2075, lng: 55.7447, mapDemo: true,
     tiktok: '',
     instagram: '',
     website: '',
@@ -212,14 +214,22 @@
   }
 
   function contact() {
+    const mapLink = CO.mapUrl || (CO.lat ? `https://www.google.com/maps/search/?api=1&query=${CO.lat},${CO.lng}` : '');
     const items = [
       CO.whatsapp && `<a class="btn lp-ct" href="https://wa.me/${CO.whatsapp}" target="_blank" rel="noopener">${svg('wa', 'v3bi')}واتساب</a>`,
       CO.phone && `<a class="btn lp-ct" href="tel:+${CO.phone}">${svg('phone', 'v3bi')}اتصال</a>`,
       CO.email && `<a class="btn lp-ct" href="mailto:${CO.email}">${svg('mail', 'v3bi')}إيميل</a>`,
-      (CO.mapUrl || CO.address) && `<a class="btn lp-ct" ${CO.mapUrl ? `href="${CO.mapUrl}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
+      (mapLink || CO.address) && `<a class="btn lp-ct" ${mapLink ? `href="${esc(mapLink)}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
     ].filter(Boolean);
+    // خريطة قوقل مدمجة (ما تحتاج مفتاح)، تنحمّل بس لما يوصل لها الزائر
+    const map = CO.lat ? `<div class="lp-map">
+        <iframe src="https://maps.google.com/maps?q=${CO.lat},${CO.lng}&z=15&hl=${en() ? 'en' : 'ar'}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${esc(CO.address)}"></iframe>
+        <a class="btn pri lp-mapgo" href="${esc(mapLink)}" target="_blank" rel="noopener">${svg('pin', 'v3bi')}افتح في خرايط قوقل</a>
+        ${CO.mapDemo ? '<span class="lp-mapdemo">موقع تقريبي للتجربة</span>' : ''}
+      </div>` : '';
     const social = SOCIAL.map(([k, label, d, url = v => v]) => `<a class="lp-soc" href="${esc(CO[k] ? url(CO[k]) : '#')}"${CO[k] ? ' target="_blank" rel="noopener"' : ''} aria-label="${label}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${d}"/></svg></a>`).join('');
     return `<section class="lp-contact" id="lpContact"><h2>تواصل معنا</h2><div class="lp-ctrow">${items.join('') || '<span class="muted">معلومات التواصل تنضاف قريباً</span>'}</div>
+      ${map}
       <div class="lp-social">${social}</div>
       <p class="lp-foot muted small">© ${new Date().getFullYear()} ${esc(CO.name)}</p></section>`;
   }
