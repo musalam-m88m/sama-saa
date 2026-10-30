@@ -53,6 +53,29 @@
     { id: 'value', title: 'تقييم العقارات', desc: 'تقييم عادل لقيمة عقارك أو أرضك في السوق', icon: 'value', kinds: ['done', 'build', 'land'] },
   ];
   const AREAS = ['العين', 'أبوظبي', 'دبي', 'الشارقة', 'غير ذلك'];
+  // مناطق كل مدينة [عربي، إنجليزي]: تطلع تحت خانة «المنطقة» وتنفلتر وهو يكتب
+  const DISTRICTS = {
+    'العين': [['الجيمي', 'Al Jimi'], ['المويجعي', 'Al Muwaiji'], ['القطارة', 'Al Qattara'], ['الهيلي', 'Hili'], ['الطوية', 'Al Towayya'], ['المسعودي', 'Al Masoudi'],
+      ['المطوعة', 'Al Mutawaa'], ['المعترض', 'Al Muatarad'], ['الجاهلي', 'Al Jahili'], ['المقام', 'Al Maqam'], ['الخبيصي', 'Al Khabisi'], ['زاخر', 'Zakher'],
+      ['الفوعة', 'Al Foah'], ['الصاروج', 'Al Sarooj'], ['المطارد', 'Al Mutarad'], ['المنيزفة', 'Al Muneezfah'], ['النيادات', 'Al Niyadat'], ['الكويتات', 'Al Kuwaitat'],
+      ['الخرير', 'Al Khrair'], ['عشارج', 'Asharej'], ['المرخانية', 'Al Markhaniya'], ['الظاهر', 'Al Dhahir'], ['فلج هزاع', 'Falaj Hazza'], ['نعمة', 'Neima'],
+      ['أم غافة', 'Um Ghafa'], ['الشويب', 'Al Shuwaib'], ['الوقن', 'Al Wagan'], ['سويحان', 'Sweihan'], ['رماح', 'Remah'], ['المربعة', 'Al Murabaa'],
+      ['الصناعية', 'Industrial Area'], ['وسط المدينة', 'City Centre']],
+    'أبوظبي': [['الخالدية', 'Al Khalidiya'], ['البطين', 'Al Bateen'], ['المشرف', 'Al Mushrif'], ['الكرامة', 'Al Karamah'], ['الزعاب', 'Al Zaab'], ['النهيان', 'Al Nahyan'],
+      ['المرور', 'Al Muroor'], ['الروضة', 'Al Rawdah'], ['المناصير', 'Al Manaseer'], ['الحصن', 'Al Hosn'], ['الدانة', 'Al Danah'], ['الزاهية', 'Al Zahiyah'],
+      ['جزيرة الريم', 'Al Reem Island'], ['جزيرة السعديات', 'Saadiyat Island'], ['جزيرة ياس', 'Yas Island'], ['جزيرة المارية', 'Al Maryah Island'], ['شاطئ الراحة', 'Al Raha Beach'], ['حدائق الراحة', 'Al Raha Gardens'],
+      ['مدينة خليفة', 'Khalifa City'], ['مدينة محمد بن زايد', 'Mohammed Bin Zayed City'], ['مدينة شخبوط', 'Shakhbout City'], ['بني ياس', 'Baniyas'], ['الشامخة', 'Al Shamkha'], ['الشهامة', 'Al Shahama'],
+      ['الرحبة', 'Al Rahba'], ['الوثبة', 'Al Wathba'], ['مصفح', 'Musaffah'], ['المقطع', 'Al Maqta'], ['الباهية', 'Al Bahia'], ['الفلاح', 'Al Falah'],
+      ['الريف', 'Al Reef'], ['الرياض', 'Riyadh City'], ['مدينة زايد', 'Zayed City']],
+    'دبي': [['دبي مارينا', 'Dubai Marina'], ['وسط مدينة دبي', 'Downtown Dubai'], ['الخليج التجاري', 'Business Bay'], ['نخلة جميرا', 'Palm Jumeirah'], ['أبراج بحيرات جميرا', 'JLT'],
+      ['قرية جميرا الدائرية', 'JVC'], ['جميرا', 'Jumeirah'], ['البرشاء', 'Al Barsha'], ['الجداف', 'Al Jaddaf'], ['دبي هيلز', 'Dubai Hills'], ['الفرجان', 'Al Furjan'],
+      ['موتور سيتي', 'Motor City'], ['دبي الجنوب', 'Dubai South'], ['مردف', 'Mirdif'], ['الورقاء', 'Al Warqa'], ['القصيص', 'Al Qusais'], ['النهدة', 'Al Nahda'],
+      ['المزهر', 'Al Mizhar'], ['ديرة', 'Deira'], ['بر دبي', 'Bur Dubai'], ['الكرامة', 'Karama']],
+    'الشارقة': [['المجاز', 'Al Majaz'], ['التعاون', 'Al Taawun'], ['الخان', 'Al Khan'], ['النهدة', 'Al Nahda'], ['القاسمية', 'Al Qasimia'], ['المجرة', 'Al Mujarrah'],
+      ['الممزر', 'Al Mamzar'], ['مويلح', 'Muwaileh'], ['الرحمانية', 'Al Rahmaniya'], ['الطي', 'Al Tay'], ['الجادة', 'Aljada'], ['الزاهية', 'Al Zahia']],
+  };
+  const ROOMS = ['استوديو', '1', '2', '3', '4', '5', '6', '7+'];
+  const FLOORS = ['أي طابق', 'الأرضي', ...Array.from({ length: 15 }, (_, i) => String(i + 1)), 'أعلى من 15'];
   const TYPES = { done: ['شقة', 'فيلا', 'بناية', 'محل / مكتب'], build: ['شقة', 'فيلا', 'بناية', 'مشروع كامل'], land: ['سكنية', 'تجارية', 'استثمارية', 'صناعية'], rent: ['شقة', 'فيلا', 'محل', 'مكتب'] };
 
   // ---------- متى تطلع ----------
@@ -164,7 +187,8 @@
   }
 
   function field(id, label, html, req) { return `<div class="f"><label for="lp_${id}">${label}${req ? ' <span class="lp-req">*</span>' : ''}</label>${html}</div>`; }
-  const sel = (id, opts) => `<select id="lp_${id}" name="${id}">${opts.map(o => `<option>${o}</option>`).join('')}</select>`;
+  // value ثابت بالعربي: الترجمة تغيّر النص اللي ينشاف بس، مو القيمة اللي نقارن فيها
+  const sel = (id, opts) => `<select id="lp_${id}" name="${id}">${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
   const inp = (id, type = 'text', ph = '', req = false, extra = '') => `<input id="lp_${id}" name="${id}" type="${type}" placeholder="${ph}" ${req ? 'required' : ''} ${extra}>`;
 
   function viewForm(s, k) {
@@ -182,7 +206,15 @@
     <form class="card lp-form" id="lpForm" novalidate>
       <div class="row2">
         ${field('type', 'نوع العقار', sel('type', types))}
-        ${field('area', 'المنطقة', sel('area', AREAS))}
+        ${field('city', 'المدينة', `<select id="lp_city" name="city"><option value="">كل المدن</option>${AREAS.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`)}
+      </div>
+      <div class="f lp-combo"><label for="lp_area">المنطقة</label>
+        <input id="lp_area" name="area" type="text" autocomplete="off" placeholder="اكتب اسم المنطقة أو اختر من القائمة" role="combobox" aria-expanded="false" aria-controls="lpAreaList" aria-autocomplete="list">
+        <ul id="lpAreaList" class="lp-combo-list" role="listbox" hidden></ul>
+      </div>
+      <div class="row2" data-only="rooms">
+        ${field('rooms', 'عدد الغرف', sel('rooms', ROOMS))}
+        <div data-only="floor">${field('floor', 'الطابق', sel('floor', FLOORS))}</div>
       </div>
       <div class="row2">
         ${field('size', k === 'land' ? 'مساحة الأرض (قدم²)' : 'المساحة (قدم²) — اختياري', inp('size', 'text', '', false, 'inputmode="numeric"'))}
@@ -239,7 +271,48 @@
       f.addEventListener('submit', submit);
       // رجوع من «تم الاستلام»: نرجّع اللي كتبه
       if (state.values) Object.entries(state.values).forEach(([k, v]) => { const el = f.elements[k]; if (el) el.value = v; });
+      setupForm(f);
     }
+  }
+
+  // ---------- خانات الفورم الذكية ----------
+  // نطابق الكتابة بدون فرق الهمزات والتاء المربوطة و«ال»
+  const norm = s => String(s || '').toLowerCase().trim().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ');
+  function setupForm(f) {
+    const type = f.elements.type, city = f.elements.city, area = f.elements.area, list = f.querySelector('#lpAreaList');
+    // الغرف للشقة والفيلا، والطابق للشقة بس. الخانة المخفية تنقفل عشان ما تدخل في الطلب
+    const toggle = () => {
+      const t = type.value, rooms = t === 'شقة' || t === 'فيلا', floor = t === 'شقة';
+      const r = f.querySelector('[data-only="rooms"]'), fl = f.querySelector('[data-only="floor"]');
+      r.hidden = !rooms; f.elements.rooms.disabled = !rooms;
+      fl.hidden = !floor; f.elements.floor.disabled = !floor;
+      [...f.elements.rooms.options].forEach(o => { o.hidden = t === 'فيلا' && o.value === 'استوديو'; });
+      if (t === 'فيلا' && f.elements.rooms.value === 'استوديو') f.elements.rooms.value = '3';
+    };
+    type.addEventListener('change', toggle); toggle();
+
+    const name = d => en() ? d[1] : d[0];
+    const show = () => {
+      const q = norm(area.value), c = city.value;
+      const pool = (DISTRICTS[c] ? [[c, DISTRICTS[c]]] : Object.entries(DISTRICTS)).flatMap(([cc, ds]) => ds.map(d => [d, cc]));
+      const hits = pool.filter(([d]) => !q || [d[0], d[1], d[0].replace(/^ال/, '')].some(x => norm(x).includes(q)));
+      list.innerHTML = hits.map(([d, cc]) => `<li role="option" class="sx-no-tr" data-v="${esc(name(d))}" data-c="${esc(cc)}">${esc(name(d))}${c ? '' : `<small>${esc(en() ? (window.saaI18n ? saaI18n.text(cc) : cc) : cc)}</small>`}</li>`).join('')
+        || `<li class="lp-combo-none">${en() ? 'No match: your text will be sent as written' : 'ما لقينا تطابق، بنرسل اللي كتبته'}</li>`;
+      list.hidden = false; area.setAttribute('aria-expanded', 'true');
+    };
+    const hide = () => { list.hidden = true; area.setAttribute('aria-expanded', 'false'); };
+    area.addEventListener('focus', show);
+    area.addEventListener('input', show);
+    area.addEventListener('blur', () => setTimeout(hide, 150));
+    area.addEventListener('keydown', e => {
+      if (e.key === 'Escape') hide();
+      if (e.key === 'Enter' && !list.hidden) { const li = list.querySelector('li[data-v]'); if (li) { e.preventDefault(); pick(li); } }
+    });
+    // mousedown (مو click) عشان الاختيار يصير قبل ما الخانة تفقد التركيز
+    list.addEventListener('mousedown', e => { const li = e.target.closest('li[data-v]'); if (li) { e.preventDefault(); pick(li); } });
+    function pick(li) { area.value = li.dataset.v; if (!city.value || city.value !== li.dataset.c) city.value = li.dataset.c; hide(); }
+    // تغيير المدينة: نفضّي المنطقة ونفتح قائمة مناطقها
+    city.addEventListener('change', () => { area.value = ''; area.focus(); });
   }
 
   function submit(e) {
@@ -254,7 +327,8 @@
     const E = en() && window.saaI18n, L = (ar, enTxt) => E ? enTxt : ar, T = x => E ? saaI18n.text(x) : x;
     const lines = [L(`طلب جديد من موقع ${CO.name}`, 'New request from the Sama Saa Real Estate website'),
       `${L('الخدمة', 'Service')}: ${T(s.title)}${state.kind ? ' — ' + T(KIND[state.kind][0]) : ''}`,
-      v.want && `${L('تبي', 'Wants to')}: ${T(v.want)}`, `${L('نوع العقار', 'Property type')}: ${T(v.type)}`, `${L('المنطقة', 'Area')}: ${T(v.area)}`,
+      v.want && `${L('تبي', 'Wants to')}: ${T(v.want)}`, `${L('نوع العقار', 'Property type')}: ${T(v.type)}`, v.city && `${L('المدينة', 'City')}: ${T(v.city)}`, v.area && `${L('المنطقة', 'Area')}: ${String(v.area).trim()}`,
+      v.rooms && `${L('عدد الغرف', 'Bedrooms')}: ${T(v.rooms)}`, v.floor && `${L('الطابق', 'Floor')}: ${T(v.floor)}`,
       v.size && `${L('المساحة', 'Size')}: ${v.size} ${L('قدم²', 'sq ft')}`,
       v.budget && `${L('الميزانية', 'Budget')}: ${v.budget} ${L('درهم', 'AED')}`, v.price && `${L('السعر المتوقع', 'Expected price')}: ${v.price} ${L('درهم', 'AED')}`,
       v.purpose && `${L('الغرض', 'Purpose')}: ${T(v.purpose)}`,

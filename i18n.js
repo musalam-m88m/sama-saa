@@ -265,6 +265,8 @@
     'رقم الواتساب ما انضاف للحين، هذا ملخّص طلبك:': 'The WhatsApp number is not added yet. Here is your request summary:',
     'الرجوع للصفحة الأولى': 'Back to home', 'تواصل معنا': 'Contact us', 'واتساب': 'WhatsApp', 'اتصال': 'Call', 'إيميل': 'Email', 'موقعنا': 'Our location',
     'العين — الإمارات العربية المتحدة': 'Al Ain — United Arab Emirates', 'معلومات التواصل تنضاف قريباً': 'Contact details coming soon', 'افتح في خرايط قوقل': 'Open in Google Maps', 'موقع تقريبي للتجربة': 'Approximate location (demo)',
+    'كل المدن': 'All cities', 'اكتب اسم المنطقة أو اختر من القائمة': 'Type an area or pick from the list', 'عدد الغرف': 'Bedrooms', 'استوديو': 'Studio',
+    'أي طابق': 'Any floor', 'أعلى من 15': 'Above 15',
     // شاشة أول تشغيل (اختيار كلمة مرور المدير)
     'أول تشغيل': 'First run', 'سما صاع | إدارة العقارات': 'Sama Saa | Property management', 'تأكيد كلمة المرور': 'Confirm password', 'ابدأ': 'Start',
     'اختر كلمة مرور المدير. تنطبق على كل الحسابات (ادمن، محاسب، مالك1…) وتقدر تغيّرها بعدين من «حسابي». تنحفظ في هالمتصفح بس.': 'Choose the manager password. It applies to all accounts (admin, accountant, owner1…) and you can change it later from “My account”. It is saved in this browser only.',
