@@ -135,7 +135,6 @@
 
   function viewHome() {
     return `${header()}
-    ${contactBar()}
     <section class="lp-hero">
       <div class="lp-herologo"><span class="lp-plate">${LOGO(true)}</span></div>
       <p class="lp-intro-line lp-heroline">${INTRO_LINE.split(' ').map((w, i) => `<span style="--w:${i}">${esc(w)}</span>`).join(' ')}</p>
@@ -212,19 +211,15 @@
     </section>`;
   }
 
-  // شريط التواصل تحت الشريط العلوي مباشرة، عشان يشوفه الزائر أول ما يدخل
-  function contactBar() {
-    const items = [
-      (CO.mapUrl || CO.address) && `<a class="lp-ct" ${CO.mapUrl ? `href="${CO.mapUrl}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
-      CO.phone && `<a class="lp-ct" href="tel:+${CO.phone}">${svg('phone', 'v3bi')}<span dir="ltr">+${esc(CO.phone)}</span></a>`,
-      CO.whatsapp && `<a class="lp-ct" href="https://wa.me/${CO.whatsapp}" target="_blank" rel="noopener">${svg('wa', 'v3bi')}واتساب</a>`,
-      CO.email && `<a class="lp-ct" href="mailto:${CO.email}">${svg('mail', 'v3bi')}${esc(CO.email)}</a>`,
-    ].filter(Boolean);
-    return items.length ? `<nav class="lp-ctbar" aria-label="تواصل معنا"><b>تواصل معنا</b>${items.join('')}</nav>` : '';
-  }
-
   function contact() {
-    return `<footer class="lp-contact"><p class="lp-foot muted small">© ${new Date().getFullYear()} ${esc(CO.name)}</p></footer>`;
+    const items = [
+      CO.whatsapp && `<a class="btn lp-ct" href="https://wa.me/${CO.whatsapp}" target="_blank" rel="noopener">${svg('wa', 'v3bi')}واتساب</a>`,
+      CO.phone && `<a class="btn lp-ct" href="tel:+${CO.phone}">${svg('phone', 'v3bi')}اتصال</a>`,
+      CO.email && `<a class="btn lp-ct" href="mailto:${CO.email}">${svg('mail', 'v3bi')}إيميل</a>`,
+      (CO.mapUrl || CO.address) && `<a class="btn lp-ct" ${CO.mapUrl ? `href="${CO.mapUrl}" target="_blank" rel="noopener"` : ''}>${svg('pin', 'v3bi')}${esc(CO.address || 'موقعنا')}</a>`,
+    ].filter(Boolean);
+    return `<section class="lp-contact"><h2>تواصل معنا</h2><div class="lp-ctrow">${items.join('') || '<span class="muted">معلومات التواصل تنضاف قريباً</span>'}</div>
+      <p class="lp-foot muted small">© ${new Date().getFullYear()} ${esc(CO.name)}</p></section>`;
   }
 
   function render() {

@@ -7,7 +7,11 @@
   const LIGHT = () => document.documentElement.dataset.skin === 'sand';
   // الضباب ناعم أصلاً، فنرسمه بنص دقة الشاشة (ربع البكسلات) عشان ما يثقل على الآيباد والتلفون
   const S = (window.devicePixelRatio || 1) * 2;
-  const opts = () => ({ scale: S, scaleMobile: S, highlightColor: SKY, midtoneColor: B, lowlightColor: NAVY, baseColor: LIGHT() ? B : NAVY, blurFactor: .62, speed: 1.1, zoom: .9 });
+  // الفاتح: غيوم فاتحة واضحة فوق أزرق (لو الأساس والوسط نفس اللون، الغيوم ما تبين)
+  const COLORS = () => LIGHT()
+    ? { highlightColor: 0xe0f2fe, midtoneColor: SKY, lowlightColor: 0x0a6496, baseColor: B }
+    : { highlightColor: SKY, midtoneColor: B, lowlightColor: NAVY, baseColor: NAVY };
+  const opts = () => ({ scale: S, scaleMobile: S, ...COLORS(), blurFactor: .62, speed: 1.1, zoom: .9 });
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const loaded = {};
   const js = src => loaded[src] || (loaded[src] = new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }));
