@@ -136,6 +136,8 @@ html.sx-en .lp-grid > .lp-main:hover .lp-go { transform: translate(4px, -50%); }
 .lp-contact h2 { margin: 0 0 14px; }
 .lp-ctrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .lp-foot { margin-top: 22px; }
+/* سطر © فوق السحاب المتحرك: أبيض بظل خفيف عشان يبين في الداكن والفاتح */
+.lp .lp-foot { color: #fff; opacity: .9; font-weight: 600; text-shadow: 0 1px 6px rgba(0,40,70,.55); }
 
 /* زر الرجوع للصفحة الأولى في شاشة الدخول وأول تشغيل */
 .login-wrap { position: relative; }
